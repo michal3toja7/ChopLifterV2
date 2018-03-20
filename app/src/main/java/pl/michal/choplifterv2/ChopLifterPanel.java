@@ -2,12 +2,13 @@ package pl.michal.choplifterv2;
 
 import android.content.Context;
 import android.graphics.Canvas;
-import android.graphics.Color;
 import android.graphics.Paint;
-import android.graphics.Rect;
 import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
+
+import pl.michal.choplifterv2.gui.Battlefield;
+import pl.michal.choplifterv2.gui.MainThread;
 
 
 /**
