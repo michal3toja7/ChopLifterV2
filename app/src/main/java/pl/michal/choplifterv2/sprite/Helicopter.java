@@ -13,44 +13,25 @@ public class Helicopter  extends  AbstractAnimatedSprite{
         LEFT("helicopter_left", new String[] {"", "_back", "_down", "_halfback", "_halfdown", "_land"},3),
         RIGHT("helicopter_right", new String[] {"", "_back", "_down", "_halfback", "_halfdown", "_land"},3)
 
-        private String directionName;
-        HelicopterDirection(String directionName, String direction[], int numberFrames) {
-            this.directionName = directionName;
-            this
+        private String spriteSide;
+        private String direction[];
+        private int numberFrames;
+        HelicopterDirection(String spriteSide, String direction[], int numberFrames) {
+            this.spriteSide = spriteSide;
+            this.direction = direction;
+            this.numberFrames = numberFrames;
         }
-        public String getDirectionName(){
-            return directionName;
+        public String getSpriteSide(){
+            return spriteSide;
         }
-    }
-
-    public enum HelicopterVector {
-        CENTER("helicopter_center", 3),
-        CENTER_LEFT("helicopter_center_left", 3),
-        CENTER_RIGHT("helicopter_center_right", 3),
-        CENTER_ROTAT("helicopter_center_rotate", 1),
-        CRASH("helicopter_crash", 4),
-        BLANK("",3),
-        BACK("_back", 3),
-        DOWN("_down", 3),
-        HALFBACK("_halfback", 3),
-        HALFDOWN("_halfdown", 3),
-        LAND("_land", 3);
-
-        private String nameVector;
-        private int framesNumber;
-
-        HelicopterVector(String nameVector, int framesNumber) {
-        this.nameVector = nameVector;
-        this.framesNumber = framesNumber;
+        public String[] getDirection(){
+            return direction;
         }
-
-        public String getNameVector(){
-            return nameVector;
-        }
-        public int getFramesNumber(){
-            return framesNumber;
+        public int getNumberFrames(){
+            return numberFrames;
         }
     }
+
 
     public Helicopter(){
 
