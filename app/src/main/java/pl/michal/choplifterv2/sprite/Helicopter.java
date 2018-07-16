@@ -11,7 +11,7 @@ public class Helicopter  extends  AbstractAnimatedSprite{
         CENTER("helicopter_center",new String[] {"", "_land", "_left", "_right"}, 3),
         CRASH("helicopter_crash",new String[] {""}, 4),
         LEFT("helicopter_left", new String[] {"", "_back", "_down", "_halfback", "_halfdown", "_land"},3),
-        RIGHT("helicopter_right", new String[] {"", "_back", "_down", "_halfback", "_halfdown", "_land"},3)
+        RIGHT("helicopter_right", new String[] {"", "_back", "_down", "_halfback", "_halfdown", "_land"},3);
 
         private String spriteSide;
         private String direction[];
@@ -33,9 +33,55 @@ public class Helicopter  extends  AbstractAnimatedSprite{
     }
 
 
+
+    protected final static int DIR_CENTER = 0 ;
+    private final static int DIR_CENTER_LAND = 100 + DIR_CENTER ;
+    private final static int DIR_CENTER_L = 4 ;
+    private final static int DIR_CENTER_R = 5 ;
+    protected final static int DIR_LEFT = 1 ;
+    private final static int DIR_LEFT_LAND = 100 + DIR_LEFT ;
+    protected final static int DIR_RIGHT = 2 ;
+    private final static int DIR_RIGHT_LAND = 100 + DIR_RIGHT ;
+
+    private final static int IMPULSE = 60 ;
+    private final static int FULL_THROTTLE = 10 ;
+    private final static float GRAVITY = 0.6f ;
+    private final static int ANGLEPOINT = 5 ;
+    private final static int MAXANGLEPOINT = ANGLEPOINT + 3 ;
+
+    private int v = 0 ;
+    private int stepsX = 0 ;
+    private int stepsY = 0 ;
+
+    private int impulseX = 0 ;
+    private int impulseY = 0 ;
+
+
     public Helicopter(){
+        //   setX(pLevel.getLandingCoordsX()) ;
+        //   setY(pLevel.getLandingCoordsY()) ;
+        //   this.v = pLevel.getStartX() ;
+        // setLevel(pLevel) ;
+        setX(400);
+        setY(400);
+        setDirection(DIR_RIGHT) ;
+        loadAnimation() ;
 
+    }
+    public boolean isLanded() {
+        return getY() == getLevel().getLandingCoordsY() ;
+    }
 
+    public boolean canEnter(int x) {
+        return isLanded()
+                && (x > (getX()+12)-4)
+                &&  (x < (getX()+12)+4) ;
+    }
+
+    public boolean canLeave() {
+        return isLanded()
+                && (getX() > getLevel().getLandingCoordsX()-10)
+                &&  (getX() < getLevel().getLandingCoordsX()+20) ;
     }
 
 
@@ -43,18 +89,29 @@ public class Helicopter  extends  AbstractAnimatedSprite{
     public void loadAnimation() {
 
         switch (getDirection()) {
+
+/*            IdDirection Left and Right:
+            0 - ""
+            1 - _back
+            2 - _down
+            3 - _halfback
+            4 - _halfdown
+            5 - _land
+
+*/
             case DIR_RIGHT:
                 if (Math.abs(stepsX) <= ANGLEPOINT)
-                    setAnimation(helRight) ;
+                    setAnimation(HelicopterDirection.RIGHT, 0);
+
                 else if (stepsX > 0) {
                     if (Math.abs(stepsX) < MAXANGLEPOINT)
-                        setAnimation(helRightHalfDown) ;
+                        setAnimation(HelicopterDirection.RIGHT, 4);
                     else
-                        setAnimation(helRightDown) ;
+                        setAnimation(HelicopterDirection.RIGHT, 2);
                 } else if (Math.abs(stepsX) < MAXANGLEPOINT)
-                    setAnimation(helRightHalfBack) ;
+                    setAnimation(HelicopterDirection.RIGHT, 3);
                 else
-                    setAnimation(helRightBack) ;
+                    setAnimation(HelicopterDirection.RIGHT, 1);
                 break ;
             case DIR_LEFT:
                 if (Math.abs(stepsX) <= ANGLEPOINT)

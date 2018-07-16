@@ -21,8 +21,13 @@ public abstract class AbstractAnimatedSprite extends AbstractSprite {
         return action() ;
     }
 
-    public final void setAnimation(BufferedImage[] pAnimation) {
-        animation = pAnimation ;
+    public final void setAnimation(Helicopter.HelicopterDirection HelicopterDirection, int IdDirection) {
+
+        String [] Direction = HelicopterDirection.getDirection();
+
+
+        HelicopterDirection.getNumberFrames();
+
     }
 
     public boolean isNear(int x, int y) {
