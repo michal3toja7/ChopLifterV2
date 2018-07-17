@@ -1,7 +1,5 @@
 package pl.michal.choplifterv2.sprite;
 
-import java.util.Arrays;
-
 /**
  * Created by micha on 20.03.2018.
  */
@@ -11,21 +9,22 @@ public class Helicopter  extends  AbstractAnimatedSprite{
         CENTER("helicopter_center",new String[] {"", "_land", "_left", "_right"}, 3),
         CRASH("helicopter_crash",new String[] {""}, 4),
         LEFT("helicopter_left", new String[] {"", "_back", "_down", "_halfback", "_halfdown", "_land"},3),
-        RIGHT("helicopter_right", new String[] {"", "_back", "_down", "_halfback", "_halfdown", "_land"},3);
+        RIGHT("helicopter_right", new String[] {"", "_back", "_down", "_halfback", "_halfdown", "_land"},3),
+        ROTATE("helicopter_rotate", new String[] {"_left", "_right"},0);
 
         private String spriteSide;
-        private String direction[];
+        private String directionName[];
         private int numberFrames;
         HelicopterDirection(String spriteSide, String direction[], int numberFrames) {
             this.spriteSide = spriteSide;
-            this.direction = direction;
+            this.directionName = direction;
             this.numberFrames = numberFrames;
         }
         public String getSpriteSide(){
             return spriteSide;
         }
-        public String[] getDirection(){
-            return direction;
+        public String[] getDirectionName(){
+            return directionName;
         }
         public int getNumberFrames(){
             return numberFrames;
@@ -64,11 +63,11 @@ public class Helicopter  extends  AbstractAnimatedSprite{
         // setLevel(pLevel) ;
         setX(400);
         setY(400);
-        setDirection(DIR_RIGHT) ;
+        setDirection(DIR_CENTER) ;
         loadAnimation() ;
 
     }
-    public boolean isLanded() {
+/*    public boolean isLanded() {
         return getY() == getLevel().getLandingCoordsY() ;
     }
 
@@ -84,7 +83,7 @@ public class Helicopter  extends  AbstractAnimatedSprite{
                 &&  (getX() < getLevel().getLandingCoordsX()+20) ;
     }
 
-
+*/
 
     public void loadAnimation() {
 
@@ -115,44 +114,51 @@ public class Helicopter  extends  AbstractAnimatedSprite{
                 break ;
             case DIR_LEFT:
                 if (Math.abs(stepsX) <= ANGLEPOINT)
-                    setAnimation(helLeft) ;
+                    setAnimation(HelicopterDirection.LEFT, 0);
                 else if (stepsX < 0) {
                     if (Math.abs(stepsX) < MAXANGLEPOINT)
-                        setAnimation(helLeftHalfDown) ;
+                        setAnimation(HelicopterDirection.LEFT, 4);
                     else
-                        setAnimation(helLeftDown) ;
+                        setAnimation(HelicopterDirection.LEFT, 2);
                 } else if (Math.abs(stepsX) < MAXANGLEPOINT)
-                    setAnimation(helLeftHalfBack) ;
+                    setAnimation(HelicopterDirection.LEFT, 3);
                 else
-                    setAnimation(helLeftBack) ;
+                    setAnimation(HelicopterDirection.RIGHT, 1);
                 break ;
+/*           IdDirection Center
+            0 - ""
+            1 - _land
+            2 - _left
+            3 - _right
+
+*/
             case DIR_CENTER:
                 if (Math.sqrt(stepsX*stepsX) <= ANGLEPOINT) {
-                    setAnimation(helCenter) ;
+                    setAnimation(HelicopterDirection.CENTER, 0);
                 } else if (stepsX > 0) {
-                    setAnimation(helCenterRight) ;
+                    setAnimation(HelicopterDirection.CENTER, 3);
                 } else {
-                    setAnimation(helCenterLeft) ;
+                    setAnimation(HelicopterDirection.CENTER, 2);
                 } break ;
             case DIR_CENTER_L:
-                setAnimation(helTurnLeft) ;
+                setAnimation(HelicopterDirection.ROTATE, 0);
                 break ;
             case DIR_CENTER_R:
-                setAnimation(helTurnRight) ;
+                setAnimation(HelicopterDirection.ROTATE, 1);
                 break ;
             case CRASH:
-                setAnimation(helCrash) ;
+                setAnimation(HelicopterDirection.CRASH, 0);
                 break ;
             case DIR_RIGHT_LAND:
-                setAnimation(helRightLand) ;
+                setAnimation(HelicopterDirection.RIGHT, 5);
                 setDirection(DIR_RIGHT) ;
                 break ;
             case DIR_LEFT_LAND:
-                setAnimation(helLeftLand) ;
+                setAnimation(HelicopterDirection.LEFT, 5);
                 setDirection(DIR_LEFT) ;
                 break ;
             case DIR_CENTER_LAND:
-                setAnimation(helCenterLand) ;
+                setAnimation(HelicopterDirection.CENTER, 1);
                 setDirection(DIR_CENTER) ;
                 break ;
         }

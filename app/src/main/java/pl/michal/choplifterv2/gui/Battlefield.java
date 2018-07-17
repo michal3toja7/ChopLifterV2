@@ -27,6 +27,7 @@ import static pl.michal.choplifterv2.ChopLifterActivity.getContext;
 public class Battlefield implements GameObject {
     Stars stars;
     VectorDrawableCompat mMyVectorDrawable;
+    Helicopter helicopter;
     int i=0;
 
 
@@ -39,19 +40,13 @@ public class Battlefield implements GameObject {
     public void draw(Canvas canvas){
 
 
+            helicopter = new Helicopter();
 
-        if (i==0) {
-            mMyVectorDrawable = VectorDrawableCompat.create(getContext().getResources(), R.drawable.helicopter_center_right1, null);
-        i++;
-        }
-        else if (i==1) {
-            mMyVectorDrawable = VectorDrawableCompat.create(getContext().getResources(), R.drawable.helicopter_center_right2, null);
-            i++;
-        }
-        else if (i==2) {
-            mMyVectorDrawable = VectorDrawableCompat.create(getContext().getResources(), R.drawable.helicopter_center_right3, null);
-            i=0;
-        }
+
+        String vectorImageName =helicopter.getVectorImageName();
+        int resID = getContext().getResources().getIdentifier(vectorImageName, "drawable", getContext().getPackageName());
+        mMyVectorDrawable = VectorDrawableCompat.create(getContext().getResources(),resID, null);
+
     //    mMyVectorDrawable.getI
      //   System.out.println("minimum width: " + mMyVectorDrawable.getMinimumWidth());
      //   System.out.println("minimum height: " + mMyVectorDrawable.getMinimumHeight());
@@ -64,11 +59,9 @@ public class Battlefield implements GameObject {
 
         paint.setColor(C64Theme.GRAY);
         canvas.drawRect(0,height/2,width,height,paint);
-  //      draw(getMirroredImage(mMyVectorDrawable));
-      //  getMirroredImage(mMyVectorDrawable);
-        canvas.drawBitmap(getMirroredImage(mMyVectorDrawable),mMyVectorDrawable.getMinimumWidth()*12,
-                mMyVectorDrawable.getMinimumHeight()*12,null);
 
+      //  getMirroredImage(mMyVectorDrawable);
+        mMyVectorDrawable.draw(canvas);
 
         if (stars==null)
             stars = new Stars(20);
