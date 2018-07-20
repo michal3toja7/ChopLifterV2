@@ -8,8 +8,8 @@ public final class C64Theme {
 
 
 	/* Screen */
-	public final static int SCREEN_WIDTH = ChopLifterActivity.getWidth(ChopLifterActivity.getContext());
-	public final static int SCREEN_HEIGHT = ChopLifterActivity.getHeight(ChopLifterActivity.getContext());
+	public final static int SCREEN_WIDTH = 1920;//ChopLifterActivity.getWidth(ChopLifterActivity.getContext());
+	public final static int SCREEN_HEIGHT = 1080;//ChopLifterActivity.getHeight(ChopLifterActivity.getContext());
 
 	/* Colors*/
 	public final static int BLACK = C64Color.C64COLOR_0 ;

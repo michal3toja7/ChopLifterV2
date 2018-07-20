@@ -85,6 +85,7 @@ public class Helicopter  extends  AbstractAnimatedSprite{
 
 */
 
+
     public void loadAnimation() {
 
         switch (getDirection()) {
@@ -163,4 +164,44 @@ public class Helicopter  extends  AbstractAnimatedSprite{
                 break ;
         }
     }
+
+    public void moveLeft() {
+ //       if (getY() >= getLevel().getLandingCoordsY()) { setY(getLevel().getLandingCoordsY()); stepsX = 0 ; return ; } // Don't move when landed
+ //      if (getX() <= 10){ setX(10) ; stepsX = 0 ; return ; }
+        impulseX = IMPULSE ;
+        if (stepsX > - FULL_THROTTLE) {
+            stepsX-- ;
+            loadAnimation() ;
+        }
+    }
+
+    public void moveRight() {
+  //      if (getY() >= getLevel().getLandingCoordsY()) { setY(getLevel().getLandingCoordsY()); stepsX = 0 ; return ; } // Don't move when landed
+  //      if (getX() > ILevel.MAXWIDTH - 50) { setX(ILevel.MAXWIDTH - 50) ; stepsX = 0 ; return ; }
+        impulseX = IMPULSE ;
+        if (stepsX < FULL_THROTTLE) {
+            stepsX++ ;
+            loadAnimation() ;
+        }
+    }
+
+    public void moveUp() {
+  //      if (! isAlive()) return ;
+   //     if (getY() <= 50) { setY(50) ; stepsY = 0; return ; } // Don't rise higher
+        if (stepsY > - FULL_THROTTLE) {
+            stepsY-- ;
+            impulseY = IMPULSE ;
+            loadAnimation() ;
+        }
+    }
+
+    public void moveDown() {
+   //     if (getY() >= getLevel().getLandingCoordsY()) { setY(getLevel().getLandingCoordsY()) ; stepsY = 0; return ; } // Don't do anything when landed
+        if (stepsX < FULL_THROTTLE) {
+            stepsY++ ;
+            impulseY = IMPULSE ;
+            loadAnimation() ;
+        }
+    }
+
 }

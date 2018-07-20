@@ -27,7 +27,7 @@ import static pl.michal.choplifterv2.ChopLifterActivity.getContext;
 public class Battlefield implements GameObject {
     Stars stars;
     VectorDrawableCompat mMyVectorDrawable;
-    Helicopter helicopter;
+     Helicopter helicopter;
     int i=0;
 
 
@@ -39,19 +39,20 @@ public class Battlefield implements GameObject {
     @Override
     public void draw(Canvas canvas){
 
-
-            helicopter = new Helicopter();
+        if(helicopter==null){
+        helicopter = new Helicopter();}
+        else{
+            helicopter.refreshAnimation();
+        }
 
 
         String vectorImageName =helicopter.getVectorImageName();
         int resID = getContext().getResources().getIdentifier(vectorImageName, "drawable", getContext().getPackageName());
         mMyVectorDrawable = VectorDrawableCompat.create(getContext().getResources(),resID, null);
 
-    //    mMyVectorDrawable.getI
-     //   System.out.println("minimum width: " + mMyVectorDrawable.getMinimumWidth());
-     //   System.out.println("minimum height: " + mMyVectorDrawable.getMinimumHeight());
 
-        mMyVectorDrawable.setBounds(400, 400, 400+mMyVectorDrawable.getMinimumWidth()*12, 400+ mMyVectorDrawable.getMinimumHeight()*12);
+
+        mMyVectorDrawable.setBounds(helicopter.getX(), helicopter.getY(), helicopter.getX()+mMyVectorDrawable.getMinimumWidth()*12, helicopter.getY()+ mMyVectorDrawable.getMinimumHeight()*12);
         Paint paint = new Paint();
         canvas.drawColor(C64Theme.BLACK);
         int width = C64Theme.SCREEN_WIDTH;
@@ -60,7 +61,7 @@ public class Battlefield implements GameObject {
         paint.setColor(C64Theme.GRAY);
         canvas.drawRect(0,height/2,width,height,paint);
 
-      //  getMirroredImage(mMyVectorDrawable);
+        //  getMirroredImage(mMyVectorDrawable);
         mMyVectorDrawable.draw(canvas);
 
         if (stars==null)
@@ -74,20 +75,27 @@ public class Battlefield implements GameObject {
 
 
 
-    public Bitmap getMirroredImage( VectorDrawableCompat mMyVectorDrawable){
-        Bitmap split = Bitmap.createBitmap(mMyVectorDrawable.getMinimumWidth()*12,
-                mMyVectorDrawable.getMinimumHeight()*12,
-                Bitmap.Config.ARGB_8888);
-        Matrix matrix = new Matrix();
-        Canvas canvas2 = new Canvas(split);
-        mMyVectorDrawable.setBounds(400, 400, 400+mMyVectorDrawable.getMinimumWidth()*12, 400+ mMyVectorDrawable.getMinimumHeight()*12);
-        mMyVectorDrawable.draw(canvas2);
 
-      //  matrix.preScale(-1.0f, 1.0f, canvas2.getWidth() / 2, canvas2.getHeight() / 2);
-      //  canvas2.setMatrix(matrix);
-        return split;
+
+    public Helicopter getHelicopter() {
+        return helicopter;
     }
 
+    public void move(int direction) {
+        if (direction == 0) {
+            helicopter.moveLeft();
+        }
+        if (direction == 2) {
+            helicopter.moveUp();
+        }
+        if (direction == 3) {
+            helicopter.moveRight();
+        }
+        if (direction == 6) {
+            helicopter.moveDown();
+        }
 
+        System.out.println("Wartość direction:"+direction);
+    }
 
 }

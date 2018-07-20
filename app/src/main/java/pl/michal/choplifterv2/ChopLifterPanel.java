@@ -3,6 +3,7 @@ package pl.michal.choplifterv2;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Paint;
+import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
@@ -18,11 +19,24 @@ import pl.michal.choplifterv2.gui.MainThread;
 public class ChopLifterPanel extends SurfaceView implements SurfaceHolder.Callback {
     private MainThread thread;
     private Paint paint;
-    private Battlefield battlefield;
+    public Battlefield battlefield;
 
 
     public ChopLifterPanel(Context context){
         super(context);
+
+        getHolder().addCallback(this);
+
+        battlefield = new Battlefield();
+
+
+        thread = new MainThread(getHolder(), this);
+
+        setFocusable(true);
+    }
+
+    public ChopLifterPanel(Context context, AttributeSet attrs){
+        super(context, attrs);
 
         getHolder().addCallback(this);
 
@@ -77,7 +91,6 @@ public class ChopLifterPanel extends SurfaceView implements SurfaceHolder.Callba
         super.draw(canvas);
         battlefield.draw(canvas);
 
-        }
+    }
 
 }
-

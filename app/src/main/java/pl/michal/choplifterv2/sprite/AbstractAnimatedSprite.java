@@ -5,7 +5,8 @@ package pl.michal.choplifterv2.sprite;
  */
 
 public abstract class AbstractAnimatedSprite extends AbstractSprite {
-
+    private Helicopter.HelicopterDirection actualHelicopterDirection;
+    private int actualIdDirection;
     public final static int CRASH = -1 ;
   //  private ILevel level ;
     private int ticker = 0 ;
@@ -22,7 +23,8 @@ public abstract class AbstractAnimatedSprite extends AbstractSprite {
     }
 */
     public final void setAnimation(Helicopter.HelicopterDirection HelicopterDirection, int IdDirection) {
-
+            actualHelicopterDirection=HelicopterDirection;
+            actualIdDirection = IdDirection;
             StringBuilder builderVectorImage = new StringBuilder();
             String [] Direction = HelicopterDirection.getDirectionName();
             builderVectorImage.append(HelicopterDirection.getSpriteSide());
@@ -38,12 +40,14 @@ public abstract class AbstractAnimatedSprite extends AbstractSprite {
             if (frame > HelicopterDirection.getNumberFrames() || frame < 1){
                 frame = 1;
             }
-
-            System.out.println("wartość frame: "+ frame);
     }
+
 
     public String getVectorImageName() {
         return vectorImageName;
+    }
+    public void refreshAnimation(){
+        setAnimation(actualHelicopterDirection,actualIdDirection);
     }
 /*
     public boolean isNear(int x, int y) {

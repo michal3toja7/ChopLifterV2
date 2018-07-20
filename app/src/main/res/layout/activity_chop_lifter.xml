@@ -1,10 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ChopLifterActivity">
+    android:orientation="horizontal">
 
+    <pl.michal.choplifterv2.ChopLifterPanel
+        android:id="@+id/game"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
 
-</android.support.constraint.ConstraintLayout>
+    <com.erz.joysticklibrary.JoyStick
+        android:id="@+id/joy1"
+        android:layout_width="200dp"
+        android:layout_height="200dp"
+        android:layout_gravity="bottom|right"/>
+
+    <com.erz.joysticklibrary.JoyStick
+        android:id="@+id/joy2"
+        android:layout_width="200dp"
+        android:layout_height="200dp"
+        android:layout_gravity="bottom"/>
+</FrameLayout>
+
