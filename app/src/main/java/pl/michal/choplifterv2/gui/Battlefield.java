@@ -82,25 +82,10 @@ public class Battlefield implements GameObject {
     }
 
     public void move(double angle, double power) {
-  /*      if (direction == 0) {
-            helicopter.moveLeft();
-        }
-        if (direction == 2) {
-            helicopter.moveUp();
-        }
-        if (direction == 4) {
-            helicopter.moveRight();
-        }
-        if (direction == 6) {
-            helicopter.moveDown();
-        }
-        helicopter.move();
-
-        System.out.println("Wartość direction:"+direction);
- */
     helicopter.move(angle, power);
-
-
+    }
+    public void onTap(){
+        helicopter.toggleDirection();
     }
 
 

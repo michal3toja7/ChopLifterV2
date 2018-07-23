@@ -117,8 +117,14 @@ public class ChopLifterActivity extends AppCompatActivity implements JoyStick.Jo
     }
 
     @Override
-    public void onTap() {
-
+    public void onTap(JoyStick joyStick) {
+        switch (joyStick.getId()) {
+            case R.id.joy1:
+                break;
+            case R.id.joy2:
+                chopLifterPanel.battlefield.onTap();
+                break;
+        }
     }
 
     @Override

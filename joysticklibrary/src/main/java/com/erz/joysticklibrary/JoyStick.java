@@ -86,7 +86,7 @@ public class JoyStick extends View implements GestureDetector.OnGestureListener,
     public interface JoyStickListener {
         void onMove(JoyStick joyStick, double angle, double power, int direction);
 
-        void onTap();
+        void onTap(JoyStick joyStick);
 
         void onDoubleTap();
     }
@@ -252,7 +252,7 @@ public class JoyStick extends View implements GestureDetector.OnGestureListener,
 
     @Override
     public boolean onSingleTapConfirmed(MotionEvent motionEvent) {
-        if (listener != null) listener.onTap();
+        if (listener != null) listener.onTap(this);
         return false;
     }
 

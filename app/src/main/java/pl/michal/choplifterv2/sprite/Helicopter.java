@@ -1,5 +1,7 @@
 package pl.michal.choplifterv2.sprite;
 
+import javax.xml.transform.Source;
+
 /**
  * Created by micha on 20.03.2018.
  */
@@ -44,7 +46,7 @@ public class Helicopter  extends  AbstractAnimatedSprite{
 
     private final static int IMPULSE = 60 ;
     private final static int FULL_THROTTLE = 10 ;
-    private final static float GRAVITY = 0.6f ;
+    private final static float GRAVITY = 0.4f ;
     private final static int ANGLEPOINT = 5 ;
     private final static int MAXANGLEPOINT = ANGLEPOINT + 3 ;
 
@@ -54,7 +56,8 @@ public class Helicopter  extends  AbstractAnimatedSprite{
 
     private int impulseX = 0 ;
     private int impulseY = 0 ;
-
+    private int oldX=0;
+    private int oldY=0;
 
     public Helicopter(){
         //   setX(pLevel.getLandingCoordsX()) ;
@@ -84,31 +87,18 @@ public class Helicopter  extends  AbstractAnimatedSprite{
     }
 
 */
-/*public void move()  {
-    if (impulseX-- != IMPULSE -1)
-        if (impulseX > 0) {
-            if (impulseX % 10 == 0) {
-                stepsX = (int) (stepsX * GRAVITY) ;
-                loadAnimation() ;
-            }
-        } else {
-            impulseX = 0 ;
-        }
-    if (--impulseY > 0) {
-        if (impulseY % 10 == 0) {
-            stepsY = (int) (stepsY * GRAVITY) ;
-            loadAnimation() ;
-        }
-    } else {
-        impulseY = 0 ;
-    }
+public void move(double angle, double power)  {
+    oldX = getX();
+    oldY = getY();
+    setX((int)(oldX -(( Math.cos(angle) * power)*GRAVITY)));
+    setY((int)(oldY +((Math.sin(-angle) * power)*GRAVITY)));
+    stepsX=getX()-oldX;
+    stepsY=getY()-oldY;
 
-    setX(getX() + stepsX) ;
-    setY(getY() + stepsY) ;
 
-    if (getY() >= 400 ){//getLevel().getLandingCoordsY()) {
+    if (getY() >= 800 ){//getLevel().getLandingCoordsY()) {
         // Don't move when landed
-        setY(400);//getLevel().getLandingCoordsY()) ;
+        setY(800);//getLevel().getLandingCoordsY()) ;
         if (Math.sqrt(Math.sqrt(stepsY * stepsY) * Math.sqrt(stepsY * stepsY))
                 > FULL_THROTTLE) {
             stepsX = 0 ;
@@ -120,7 +110,6 @@ public class Helicopter  extends  AbstractAnimatedSprite{
         if (Math.sqrt(Math.abs(stepsY) * Math.abs(stepsY))
                 > FULL_THROTTLE / 4) {
             setDirection(getDirection() + 100) ; // 100 + x is the landing ani
-            loadAnimation() ;
         }
         stepsY = 0 ;
         stepsX = 0 ;
@@ -128,34 +117,42 @@ public class Helicopter  extends  AbstractAnimatedSprite{
     if (getY() < 50) {
         stepsY = 0 ;
         setY(50) ;
-        loadAnimation() ;
     }
 
     if (getX() < 50) {
         setX(50) ;
         stepsX = 0 ;
         loadAnimation() ;
-    } else if (getX() >  1030) { //ILevel.MAXWIDTH -50
-        setX(1030) ; //ILevel.MAXWIDTH - 50
+    } else if (getX() >  1870) { //ILevel.MAXWIDTH -50
+        setX(1870) ; //ILevel.MAXWIDTH - 50
         stepsX = 0 ;
         loadAnimation() ;
         return ;
+
     }
+    loadAnimation();
+    System.out.println("Wartość stepsX: "+ stepsX);
+    System.out.println("Wartość stepsY: "+ stepsY);
 }
+    public void toggleDirection(){
+    if(getX()-oldX > 0){
+        setDirection(DIR_CENTER_R);
+        loadAnimation();
+        setDirection(DIR_RIGHT);
+        loadAnimation();
+    }
+    else if(getX() - oldX < 0){
+        setDirection(DIR_CENTER_L);
+        loadAnimation();
+        setDirection(DIR_LEFT);
+        loadAnimation();
+    }
+    else if(getX()-oldX == 0){
+        setDirection(DIR_CENTER);
+        loadAnimation();
+    }
 
-
-*/
-public void move(double angle, double power){
-    int getX = getX();
-    int getY = getY();
-    setX((int)(getX -( Math.cos(angle) * power)));
-    setY((int)(getY + (Math.sin(-angle) * power)));
-  //  if (posX > width - radius) posX = width - radius;
- //   if (posX < radius) posX = radius;
- //   if (posY > height - radius) posY = height - radius;
- //   if (posY < radius) posY = radius;
-}
-
+    }
     public void loadAnimation() {
 
         switch (getDirection()) {
@@ -234,46 +231,6 @@ public void move(double angle, double power){
                 break ;
         }
     }
-
-    public void moveLeft() {
- //       if (getY() >= getLevel().getLandingCoordsY()) { setY(getLevel().getLandingCoordsY()); stepsX = 0 ; return ; } // Don't move when landed
- //      if (getX() <= 10){ setX(10) ; stepsX = 0 ; return ; }
-        impulseX = IMPULSE ;
-        if (stepsX > - FULL_THROTTLE) {
-            stepsX-- ;
-            loadAnimation() ;
-        }
-    }
-
-    public void moveRight() {
-  //      if (getY() >= getLevel().getLandingCoordsY()) { setY(getLevel().getLandingCoordsY()); stepsX = 0 ; return ; } // Don't move when landed
-  //      if (getX() > ILevel.MAXWIDTH - 50) { setX(ILevel.MAXWIDTH - 50) ; stepsX = 0 ; return ; }
-        impulseX = IMPULSE ;
-        if (stepsX < FULL_THROTTLE) {
-            stepsX++ ;
-            loadAnimation() ;
-        }
-    }
-
-    public void moveUp() {
-  //      if (! isAlive()) return ;
-   //     if (getY() <= 50) { setY(50) ; stepsY = 0; return ; } // Don't rise higher
-        if (stepsY > - FULL_THROTTLE) {
-            stepsY-- ;
-            impulseY = IMPULSE ;
-            loadAnimation() ;
-        }
-    }
-
-    public void moveDown() {
-   //     if (getY() >= getLevel().getLandingCoordsY()) { setY(getLevel().getLandingCoordsY()) ; stepsY = 0; return ; } // Don't do anything when landed
-        if (stepsX < FULL_THROTTLE) {
-            stepsY++ ;
-            impulseY = IMPULSE ;
-            loadAnimation() ;
-        }
-    }
-
 
 
 }
