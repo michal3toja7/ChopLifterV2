@@ -84,7 +84,77 @@ public class Helicopter  extends  AbstractAnimatedSprite{
     }
 
 */
+/*public void move()  {
+    if (impulseX-- != IMPULSE -1)
+        if (impulseX > 0) {
+            if (impulseX % 10 == 0) {
+                stepsX = (int) (stepsX * GRAVITY) ;
+                loadAnimation() ;
+            }
+        } else {
+            impulseX = 0 ;
+        }
+    if (--impulseY > 0) {
+        if (impulseY % 10 == 0) {
+            stepsY = (int) (stepsY * GRAVITY) ;
+            loadAnimation() ;
+        }
+    } else {
+        impulseY = 0 ;
+    }
 
+    setX(getX() + stepsX) ;
+    setY(getY() + stepsY) ;
+
+    if (getY() >= 400 ){//getLevel().getLandingCoordsY()) {
+        // Don't move when landed
+        setY(400);//getLevel().getLandingCoordsY()) ;
+        if (Math.sqrt(Math.sqrt(stepsY * stepsY) * Math.sqrt(stepsY * stepsY))
+                > FULL_THROTTLE) {
+            stepsX = 0 ;
+            stepsY = 0 ;
+            impulseX = 0 ;
+            impulseY = 0 ;
+        //    explode() ;
+        } else
+        if (Math.sqrt(Math.abs(stepsY) * Math.abs(stepsY))
+                > FULL_THROTTLE / 4) {
+            setDirection(getDirection() + 100) ; // 100 + x is the landing ani
+            loadAnimation() ;
+        }
+        stepsY = 0 ;
+        stepsX = 0 ;
+    } else
+    if (getY() < 50) {
+        stepsY = 0 ;
+        setY(50) ;
+        loadAnimation() ;
+    }
+
+    if (getX() < 50) {
+        setX(50) ;
+        stepsX = 0 ;
+        loadAnimation() ;
+    } else if (getX() >  1030) { //ILevel.MAXWIDTH -50
+        setX(1030) ; //ILevel.MAXWIDTH - 50
+        stepsX = 0 ;
+        loadAnimation() ;
+        return ;
+    }
+}
+
+
+*/
+public void move(double angle, double power){
+    int getX = getX();
+    int getY = getY();
+    setX((int)(getX -( Math.cos(angle) * power)));
+    setY((int)(getY + (Math.sin(-angle) * power)));
+  //  if (posX > width - radius) posX = width - radius;
+ //   if (posX < radius) posX = radius;
+ //   if (posY > height - radius) posY = height - radius;
+ //   if (posY < radius) posY = radius;
+}
 
     public void loadAnimation() {
 
@@ -203,5 +273,7 @@ public class Helicopter  extends  AbstractAnimatedSprite{
             loadAnimation() ;
         }
     }
+
+
 
 }

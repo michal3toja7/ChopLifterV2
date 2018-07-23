@@ -108,7 +108,7 @@ public class ChopLifterActivity extends AppCompatActivity implements JoyStick.Jo
     public void onMove(JoyStick joyStick, double angle, double power, int direction) {
         switch (joyStick.getId()) {
             case R.id.joy1:
-                chopLifterPanel.battlefield.move(direction);
+                chopLifterPanel.battlefield.move(angle, power);
                 break;
             case R.id.joy2:
            //     gameView.rotate(angle);

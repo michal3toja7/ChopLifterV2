@@ -52,7 +52,7 @@ public class Battlefield implements GameObject {
 
 
 
-        mMyVectorDrawable.setBounds(helicopter.getX(), helicopter.getY(), helicopter.getX()+mMyVectorDrawable.getMinimumWidth()*12, helicopter.getY()+ mMyVectorDrawable.getMinimumHeight()*12);
+        mMyVectorDrawable.setBounds(helicopter.getX(), helicopter.getY(), helicopter.getX()+mMyVectorDrawable.getMinimumWidth()*6, helicopter.getY()+ mMyVectorDrawable.getMinimumHeight()*6);
         Paint paint = new Paint();
         canvas.drawColor(C64Theme.BLACK);
         int width = C64Theme.SCREEN_WIDTH;
@@ -81,21 +81,27 @@ public class Battlefield implements GameObject {
         return helicopter;
     }
 
-    public void move(int direction) {
-        if (direction == 0) {
+    public void move(double angle, double power) {
+  /*      if (direction == 0) {
             helicopter.moveLeft();
         }
         if (direction == 2) {
             helicopter.moveUp();
         }
-        if (direction == 3) {
+        if (direction == 4) {
             helicopter.moveRight();
         }
         if (direction == 6) {
             helicopter.moveDown();
         }
+        helicopter.move();
 
         System.out.println("Wartość direction:"+direction);
+ */
+    helicopter.move(angle, power);
+
+
     }
+
 
 }
