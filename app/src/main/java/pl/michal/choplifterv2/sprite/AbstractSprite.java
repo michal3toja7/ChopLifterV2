@@ -8,7 +8,7 @@ import pl.michal.choplifterv2.c64.C64Theme;
  * Created by micha on 02.04.2018.
  */
 
-public class AbstractSprite {
+public class AbstractSprite implements InterfaceSprite{
     private int x ;
     private int y ;
 

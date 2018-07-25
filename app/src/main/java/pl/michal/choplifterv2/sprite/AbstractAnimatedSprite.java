@@ -4,7 +4,7 @@ package pl.michal.choplifterv2.sprite;
  * Created by micha on 16.04.2018.
  */
 
-public abstract class AbstractAnimatedSprite extends AbstractSprite {
+public abstract class AbstractAnimatedSprite extends AbstractSprite implements InterfaceSprite,InterfaceAnimatedSprite {
     private Helicopter.HelicopterDirection actualHelicopterDirection;
     private int actualIdDirection;
     public final static int CRASH = -1 ;
