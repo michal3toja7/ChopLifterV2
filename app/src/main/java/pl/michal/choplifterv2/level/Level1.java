@@ -23,6 +23,11 @@ public class Level1 extends AbstractLevel {
 
     // ------------------------------------------------------------------------
 
+    @Override
+    public int heartBeat() {
+        return 0;
+    }
+
     /**
      * @implements {@link InterfaceLevel#getStartX()}
      */
