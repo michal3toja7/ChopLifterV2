@@ -1,6 +1,10 @@
 package pl.michal.choplifterv2.sprite;
 
+import android.graphics.Canvas;
+
 public interface InterfaceSprite {
+    void draw(Canvas canvas);
+
     public interface ISprite {
 
         /* Paint */

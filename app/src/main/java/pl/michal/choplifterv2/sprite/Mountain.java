@@ -18,18 +18,9 @@ import static pl.michal.choplifterv2.ChopLifterActivity.getContext;
             //setIcon(convertAsIs(MOUNTAIN)) ;
         }
 
+    @Override
     public void draw(Canvas canvas) {
 
-
-
-        String vectorImageName = this.getVectorImageName();
-        int resID = getContext().getResources().getIdentifier(vectorImageName, "drawable", getContext().getPackageName());
-        mMyVectorDrawable = VectorDrawableCompat.create(getContext().getResources(), resID, null);
-
-
-        mMyVectorDrawable.setBounds(this.getX(), this.getY(), this.getX() + mMyVectorDrawable.getMinimumWidth() * 6, this.getY() + mMyVectorDrawable.getMinimumHeight() * 6);
-
-        mMyVectorDrawable.draw(canvas);
     }
-    }
+}
 

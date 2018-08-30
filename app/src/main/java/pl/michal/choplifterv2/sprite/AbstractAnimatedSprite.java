@@ -3,6 +3,8 @@ package pl.michal.choplifterv2.sprite;
 import android.graphics.Canvas;
 import android.support.graphics.drawable.VectorDrawableCompat;
 
+import pl.michal.choplifterv2.level.InterfaceLevel;
+
 import static pl.michal.choplifterv2.ChopLifterActivity.getContext;
 
 /**
@@ -10,11 +12,11 @@ import static pl.michal.choplifterv2.ChopLifterActivity.getContext;
  */
 
 public abstract class AbstractAnimatedSprite extends AbstractSprite implements InterfaceSprite,InterfaceAnimatedSprite {
-    VectorDrawableCompat mMyVectorDrawable;
-    private Helicopter.SpriteDirection actualSpriteDirection;
+    private VectorDrawableCompat mMyVectorDrawable;
+    private SpriteDirection actualSpriteDirection;
     private int actualIdDirection;
     public final static int CRASH = -1 ;
-  //  private ILevel level ;
+    private InterfaceLevel level ;
     private int ticker = 0 ;
     private int direction;
     private String vectorImageName = null ;
@@ -27,13 +29,15 @@ public abstract class AbstractAnimatedSprite extends AbstractSprite implements I
         HEL_LEFT("helicopter_left", new String[] {"", "_back", "_down", "_halfback", "_halfdown", "_land"},3),
         HEL_RIGHT("helicopter_right", new String[] {"", "_back", "_down", "_halfback", "_halfdown", "_land"},3),
         HEL_ROTATE("helicopter_rotate", new String[] {"_left", "_right"},0),
-        HUM_CENTER("human_center", new String[] {""},2),
-        HUM_LEFT("human_left_", new String[] {""},3),
-        HUM_RIGHT("human_right", new String[] {""},3),
+        HUMAN("human", new String[] {"_center", "_left_", "_right"},3),
         TAN_CENTER("tank_center", new String[] {""},2),
         TAN_LEFT("tank_left", new String[] {""},2),
         TAN_RIGHT("tank_right", new String[] {""},2),
-        TAN_CRASH("tank_center", new String[] {""},2),;
+        TAN_CRASH("tank_crash", new String[] {""},2),
+        STATION("station", new String[] {""},1),
+        HOUSE("house", new String[] {"","_crash"},1),
+        ARM("arm", new String[] {"", "crash"},2),
+        FENCE("fence", new String[] {""},1);
 
 
         private String spriteSide;
@@ -66,8 +70,10 @@ public abstract class AbstractAnimatedSprite extends AbstractSprite implements I
     public final void setAnimation(SpriteDirection spriteDirection, int IdDirection) {
             actualSpriteDirection = spriteDirection;
             actualIdDirection = IdDirection;
+
             StringBuilder builderVectorImage = new StringBuilder();
             String [] Direction = spriteDirection.getDirectionName();
+
             builderVectorImage.append(spriteDirection.getSpriteSide());
             builderVectorImage.append(Direction[IdDirection]);
             if (spriteDirection.getNumberFrames() != 0){
@@ -88,6 +94,7 @@ public abstract class AbstractAnimatedSprite extends AbstractSprite implements I
         return vectorImageName;
     }
     public void refreshAnimation(){
+
         setAnimation(actualSpriteDirection,actualIdDirection);
     }
 /*
@@ -138,26 +145,22 @@ public abstract class AbstractAnimatedSprite extends AbstractSprite implements I
 
     public void draw(Canvas canvas) {
 
-
-
-        String vectorImageName = this.getVectorImageName();
-        int resID = getContext().getResources().getIdentifier(vectorImageName, "drawable", getContext().getPackageName());
+        int resID = getContext().getResources().getIdentifier(this.getVectorImageName(), "drawable", getContext().getPackageName());
         mMyVectorDrawable = VectorDrawableCompat.create(getContext().getResources(), resID, null);
 
 
         mMyVectorDrawable.setBounds(this.getX(), this.getY(), this.getX() + mMyVectorDrawable.getMinimumWidth() * 6, this.getY() + mMyVectorDrawable.getMinimumHeight() * 6);
-
         mMyVectorDrawable.draw(canvas);
     }
 
-/*
-    public ILevel getLevel() {
+
+    public InterfaceLevel getLevel() {
         return level;
     }
 
-    public void setLevel(ILevel level) {
+    public void setLevel(InterfaceLevel level) {
         this.level = level;
     }
 
-*/
+
 }

@@ -10,6 +10,8 @@ import android.view.SurfaceView;
 
 import pl.michal.choplifterv2.gui.Battlefield;
 import pl.michal.choplifterv2.gui.MainThread;
+import pl.michal.choplifterv2.level.InterfaceLevel;
+import pl.michal.choplifterv2.level.Level1;
 
 
 /**
@@ -20,6 +22,7 @@ public class ChopLifterPanel extends SurfaceView implements SurfaceHolder.Callba
     private MainThread thread;
     private Paint paint;
     public Battlefield battlefield;
+    private InterfaceLevel level ;
 
 
     public ChopLifterPanel(Context context){
@@ -28,6 +31,7 @@ public class ChopLifterPanel extends SurfaceView implements SurfaceHolder.Callba
         getHolder().addCallback(this);
 
         battlefield = new Battlefield();
+
 
 
         thread = new MainThread(getHolder(), this);

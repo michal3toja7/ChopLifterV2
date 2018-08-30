@@ -1,11 +1,13 @@
 package pl.michal.choplifterv2.sprite;
 
-public class Station extends AbstractSprite{
+
+
+public class Station extends  AbstractAnimatedSprite{
 
     public Station(int x, int y) {
         setX(x) ;
         setY(y) ;
-     //   setIcon(convertAsIs(STATION1)) ;
+        setAnimation(SpriteDirection.STATION, 0);
     }
 
     public boolean canEnter(int x) {

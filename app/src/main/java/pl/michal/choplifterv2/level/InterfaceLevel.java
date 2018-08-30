@@ -1,5 +1,7 @@
 package pl.michal.choplifterv2.level;
 
+import android.graphics.Canvas;
+
 import java.util.List;
 
 import pl.michal.choplifterv2.sprite.Helicopter;
@@ -10,7 +12,7 @@ import pl.michal.choplifterv2.sprite.Station;
 public interface InterfaceLevel {
     /*Constants */
     /** Max widths of a level */
-    public final static int MAXWIDTH = 1000 ;
+    public final static int MAXWIDTH = 1920 ;
 
 
     /* Maps */
@@ -77,4 +79,6 @@ public interface InterfaceLevel {
     boolean isHelicopterNear(int x) ;
     /** Station */
     Station getStation() ;
+
+    void draw(Canvas canvas);
 }

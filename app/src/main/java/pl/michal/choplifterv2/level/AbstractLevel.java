@@ -1,10 +1,14 @@
 package pl.michal.choplifterv2.level;
 
+import android.graphics.Canvas;
+
 import java.util.ArrayList;
 import java.util.List;
 
 import pl.michal.choplifterv2.c64.C64Theme;
+import pl.michal.choplifterv2.sprite.Fence;
 import pl.michal.choplifterv2.sprite.Helicopter;
+import pl.michal.choplifterv2.sprite.Human;
 import pl.michal.choplifterv2.sprite.InterfaceAnimatedSprite;
 import pl.michal.choplifterv2.sprite.InterfaceSprite;
 import pl.michal.choplifterv2.sprite.Station;
@@ -39,12 +43,12 @@ public abstract class AbstractLevel implements InterfaceLevel{
      */
 
 
-/*    public void paint(int x, Graphics g) {
+    public void draw(Canvas canvas) {
         for (int i = 0; i < getMap().size(); ++i) {
-            getMap(i).paint(x, g) ;
+            getMap(i).draw(canvas);
         }
     }
-*/
+
     // ------------------------------------------------------------------------
 
     /**
@@ -74,7 +78,7 @@ public abstract class AbstractLevel implements InterfaceLevel{
     // ------------------------------------------------------------------------
 
     /**
-     * This handles explosions of arm. Looks for destroyables near to the
+     * This handles explosions of arm1. Looks for destroyables near to the
      * explosion.
      */
  /*   public void manageCollision(int x, int y) throws DestroyedException{
@@ -109,12 +113,12 @@ public abstract class AbstractLevel implements InterfaceLevel{
      * Add element to game
      */
     public void add(InterfaceSprite sprite) {
-  /*      if (sprite instanceof Human) {
+        if (sprite instanceof Human) {
             if (! map.contains(getStation()))
                 add(getStation()) ;
             if (! map.contains(getHelicopter()))
                 add(getHelicopter()) ;
-        }*/
+        }
         map.add(sprite) ;
         if (sprite instanceof InterfaceAnimatedSprite) {
             activeMap.add(sprite) ;
@@ -139,10 +143,6 @@ public abstract class AbstractLevel implements InterfaceLevel{
                 && Math.abs((double) (x - getHelicopter().getX())) < 100 ;
     }
 
-    @Override
-    public Station getStation() {
-        return null;
-    }
 
     /**
      * Getter
@@ -233,7 +233,7 @@ public abstract class AbstractLevel implements InterfaceLevel{
      */
     public Helicopter getHelicopter() {
         if (helicopter == null)
-            setHelicopter(new Helicopter());//this)) ;
+            setHelicopter(new Helicopter(this));
         return helicopter ;
     }
 
@@ -247,17 +247,17 @@ public abstract class AbstractLevel implements InterfaceLevel{
     /**
      * Getter
      */
-  /*  public Station getStation() {
+    public Station getStation() {
         if (station == null) {
             setStation(new Station(getStartX() + 125, getStartY() - 2)) ;
-            add(new Fence(getStartX()-10, getStartY()+13)) ; // These ain't no
-            add(new Fence(getStartX()+50, getStartY()+15)) ; // real coords
-            add(new Fence(getStartX()+170, getStartY()+19)) ;
-            add(new Fence(getStartX()+350, getStartY()+25)) ;
+    //        add(new Fence(getStartX()-10, getStartY()+13)) ; // These ain't no
+     //       add(new Fence(getStartX()+50, getStartY()+15)) ; // real coords
+     //       add(new Fence(getStartX()+170, getStartY()+19)) ;
+     //       add(new Fence(getStartX()+350, getStartY()+25)) ;
         }
         return station ;
     }
-*/
+
     /**
      * Setter
      */

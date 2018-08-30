@@ -1,5 +1,7 @@
 package pl.michal.choplifterv2.sprite;
 
+import pl.michal.choplifterv2.level.InterfaceLevel;
+
 /**
  * Created by micha on 20.03.2018.
  */
@@ -30,18 +32,18 @@ public class Helicopter  extends  AbstractAnimatedSprite{
     private int oldX=0;
     private int oldY=0;
 
-    public Helicopter(){
-        //   setX(pLevel.getLandingCoordsX()) ;
-        //   setY(pLevel.getLandingCoordsY()) ;
-        //   this.v = pLevel.getStartX() ;
-        // setLevel(pLevel) ;
-        setX(400);
-        setY(400);
+    public Helicopter(InterfaceLevel pLevel){
+           setX(pLevel.getLandingCoordsX()) ;
+           setY(pLevel.getLandingCoordsY()) ;
+           this.v = pLevel.getStartX() ;
+         setLevel(pLevel) ;
         setDirection(DIR_CENTER) ;
         loadAnimation() ;
 
+
+
     }
-  /*  public boolean isLanded() {
+    public boolean isLanded() {
         return getY() == getLevel().getLandingCoordsY() ;
     }
 
@@ -57,7 +59,7 @@ public class Helicopter  extends  AbstractAnimatedSprite{
                 &&  (getX() < getLevel().getLandingCoordsX()+20) ;
     }
 
-*/
+
 public void move(double angle, double power)  {
     oldX = getX();
     oldY = getY();
@@ -67,9 +69,9 @@ public void move(double angle, double power)  {
     stepsY=getY()-oldY;
 
 
-    if (getY() >= 800 ){//getLevel().getLandingCoordsY()) {
+    if (getY() >= getLevel().getLandingCoordsY()) {
         // Don't move when landed
-        setY(800);//getLevel().getLandingCoordsY()) ;
+        setY(getLevel().getLandingCoordsY()) ;
         if (Math.sqrt(Math.sqrt(stepsY * stepsY) * Math.sqrt(stepsY * stepsY))
                 > FULL_THROTTLE) {
             stepsX = 0 ;
@@ -89,22 +91,21 @@ public void move(double angle, double power)  {
         stepsY = 0 ;
         setY(50) ;
     }
-
+    System.out.println("X= "+ getX());
+    System.out.println("Y= "+ getY());
     if (getX() < 50) {
         setX(50) ;
         stepsX = 0 ;
         loadAnimation() ;
-    } else if (getX() >  1870) { //ILevel.MAXWIDTH -50
-        setX(1870) ; //ILevel.MAXWIDTH - 50
+    } else if (getX() >  InterfaceLevel.MAXWIDTH -50);
+        setX(InterfaceLevel.MAXWIDTH - 50);
         stepsX = 0 ;
         loadAnimation() ;
         return ;
 
+
     }
-    loadAnimation();
-    System.out.println("Wartość stepsX: "+ stepsX);
-    System.out.println("Wartość stepsY: "+ stepsY);
-}
+
     public void toggleDirection(){
     if(getX()-oldX > 0){
         setDirection(DIR_CENTER_R);
