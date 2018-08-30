@@ -1,10 +1,16 @@
 package pl.michal.choplifterv2.sprite;
 
+import android.graphics.Canvas;
+import android.support.graphics.drawable.VectorDrawableCompat;
+
+import static pl.michal.choplifterv2.ChopLifterActivity.getContext;
+
 /**
  * Created by micha on 16.04.2018.
  */
 
 public abstract class AbstractAnimatedSprite extends AbstractSprite implements InterfaceSprite,InterfaceAnimatedSprite {
+    VectorDrawableCompat mMyVectorDrawable;
     private Helicopter.SpriteDirection actualSpriteDirection;
     private int actualIdDirection;
     public final static int CRASH = -1 ;
@@ -128,6 +134,21 @@ public abstract class AbstractAnimatedSprite extends AbstractSprite implements I
         this.direction = direction;
     }
 
+
+
+    public void draw(Canvas canvas) {
+
+
+
+        String vectorImageName = this.getVectorImageName();
+        int resID = getContext().getResources().getIdentifier(vectorImageName, "drawable", getContext().getPackageName());
+        mMyVectorDrawable = VectorDrawableCompat.create(getContext().getResources(), resID, null);
+
+
+        mMyVectorDrawable.setBounds(this.getX(), this.getY(), this.getX() + mMyVectorDrawable.getMinimumWidth() * 6, this.getY() + mMyVectorDrawable.getMinimumHeight() * 6);
+
+        mMyVectorDrawable.draw(canvas);
+    }
 
 /*
     public ILevel getLevel() {
