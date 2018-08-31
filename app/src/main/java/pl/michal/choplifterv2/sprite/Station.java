@@ -8,6 +8,7 @@ public class Station extends  AbstractAnimatedSprite{
         setX(x) ;
         setY(y) ;
         setAnimation(SpriteDirection.STATION, 0);
+
     }
 
     public boolean canEnter(int x) {

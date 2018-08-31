@@ -20,7 +20,8 @@ public abstract class AbstractAnimatedSprite extends AbstractSprite implements I
     private int ticker = 0 ;
     private int direction;
     private String vectorImageName = null ;
-    private static int frame =1;
+    private static int frame = 1;
+    int resID = 0;
 
 
     public enum SpriteDirection {
@@ -77,10 +78,18 @@ public abstract class AbstractAnimatedSprite extends AbstractSprite implements I
             builderVectorImage.append(spriteDirection.getSpriteSide());
             builderVectorImage.append(Direction[IdDirection]);
             if (spriteDirection.getNumberFrames() != 0){
-                if (frame <= spriteDirection.getNumberFrames() && frame > 0){
+                if(frame <= 0) {
+                    frame = 1;
+                }
+                if (frame <= spriteDirection.getNumberFrames()) {
+                    builderVectorImage.append(frame);
+                } else if (frame > spriteDirection.getNumberFrames()) {
+                    frame = 1;
                     builderVectorImage.append(frame);
                 }
+
             }
+
             vectorImageName = builderVectorImage.toString();
 
             frame ++;
@@ -144,13 +153,16 @@ public abstract class AbstractAnimatedSprite extends AbstractSprite implements I
 
 
     public void draw(Canvas canvas) {
-
-        int resID = getContext().getResources().getIdentifier(this.getVectorImageName(), "drawable", getContext().getPackageName());
+   //     System.out.println(getVectorImageName());
+        resID = getContext().getResources().getIdentifier(this.getVectorImageName(), "drawable", getContext().getPackageName());
         mMyVectorDrawable = VectorDrawableCompat.create(getContext().getResources(), resID, null);
 
 
-        mMyVectorDrawable.setBounds(this.getX(), this.getY(), this.getX() + mMyVectorDrawable.getMinimumWidth() * 6, this.getY() + mMyVectorDrawable.getMinimumHeight() * 6);
+        mMyVectorDrawable.setBounds(this.getX(), this.getY(), this.getX() + mMyVectorDrawable.getMinimumWidth() * 5, this.getY() + mMyVectorDrawable.getMinimumHeight() * 5);
         mMyVectorDrawable.draw(canvas);
+
+        mMyVectorDrawable = null;
+
     }
 
 

@@ -12,6 +12,7 @@ public class House extends AbstractAnimatedSprite {
         setDirection(CLOSED) ;
         setLevel(pLevel) ;
         loadAnimation() ;
+
     }
 
     public void loadAnimation() {
@@ -41,8 +42,8 @@ public class House extends AbstractAnimatedSprite {
         // House will not be removed
         setDirection(CRASH) ;
         loadAnimation() ;
-     //   for (int i=0; i < 10; ++i)
-         //   getLevel().add(new Human(getLevel(), this)) ;
+       for (int i=0; i < 10; ++i)
+            getLevel().add(new Human(getLevel(), this)) ;
     }
 
 

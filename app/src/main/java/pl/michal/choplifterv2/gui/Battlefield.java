@@ -16,7 +16,6 @@ import pl.michal.choplifterv2.sprite.Helicopter;
 
 public class Battlefield implements GameObject {
     Stars stars;
-    private Helicopter helicopter;
     private InterfaceLevel level= new Level1();
     private static int scrollx = 0 ;
     int i=0;

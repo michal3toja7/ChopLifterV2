@@ -54,8 +54,8 @@ public abstract class AbstractLevel implements InterfaceLevel{
     /**
      * Pings all active elements and sets view (scrollx)
      */
-    /*
-    public final int heartBeat() {
+
+ /*   public final int heartBeat() {
         int result = -1 ;
         int newScrollX = -1 ;
 
@@ -116,9 +116,9 @@ public abstract class AbstractLevel implements InterfaceLevel{
         if (sprite instanceof Human) {
             if (! map.contains(getStation()))
                 add(getStation()) ;
-            if (! map.contains(getHelicopter()))
+            if (! map.contains(getHelicopter()) )
                 add(getHelicopter()) ;
-        }
+       }
         map.add(sprite) ;
         if (sprite instanceof InterfaceAnimatedSprite) {
             activeMap.add(sprite) ;
@@ -249,11 +249,11 @@ public abstract class AbstractLevel implements InterfaceLevel{
      */
     public Station getStation() {
         if (station == null) {
-            setStation(new Station(getStartX() + 125, getStartY() - 2)) ;
-    //        add(new Fence(getStartX()-10, getStartY()+13)) ; // These ain't no
-     //       add(new Fence(getStartX()+50, getStartY()+15)) ; // real coords
-     //       add(new Fence(getStartX()+170, getStartY()+19)) ;
-     //       add(new Fence(getStartX()+350, getStartY()+25)) ;
+            setStation(new Station(getStartX() + 125, getStartY() - 2));
+            add(new Fence(getStartX()-10, getStartY()+13)) ; // These ain't no
+            add(new Fence(getStartX()+50, getStartY()+15)) ; // real coords
+            add(new Fence(getStartX()+170, getStartY()+19)) ;
+            add(new Fence(getStartX()+350, getStartY()+25)) ;
         }
         return station ;
     }

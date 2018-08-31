@@ -2,6 +2,8 @@ package pl.michal.choplifterv2.sprite;
 
 import pl.michal.choplifterv2.level.InterfaceLevel;
 
+import static pl.michal.choplifterv2.c64.C64Theme.SCREEN_WIDTH;
+
 /**
  * Created by micha on 20.03.2018.
  */
@@ -39,7 +41,8 @@ public class Helicopter  extends  AbstractAnimatedSprite{
          setLevel(pLevel) ;
         setDirection(DIR_CENTER) ;
         loadAnimation() ;
-
+        System.out.println("Ja żyję!");
+        System.out.println(getVectorImageName());
 
 
     }
@@ -97,8 +100,8 @@ public void move(double angle, double power)  {
         setX(50) ;
         stepsX = 0 ;
         loadAnimation() ;
-    } else if (getX() >  InterfaceLevel.MAXWIDTH -50);
-        setX(InterfaceLevel.MAXWIDTH - 50);
+    } else if (getX() >  SCREEN_WIDTH -50);
+        setX(SCREEN_WIDTH - 50);
         stepsX = 0 ;
         loadAnimation() ;
         return ;
