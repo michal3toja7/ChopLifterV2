@@ -4,34 +4,28 @@ import pl.michal.choplifterv2.c64.C64Theme;
 import pl.michal.choplifterv2.level.DestroyedException;
 import pl.michal.choplifterv2.level.InterfaceLevel;
 
-public class Arm extends AbstractAnimatedSprite {
-    private int sx = 0 ;
+public class TankArm extends AbstractAnimatedSprite {
     private int ox = 0 ;
     private int sd = -1 ;
 
     private int ground = 1024 ;
 
-    public Arm(int x, int y, int sx, int sy, int d, InterfaceLevel pLevel) {
-        this.sx = sx ;
+    public TankArm(int x, int y, int d, InterfaceLevel pLevel) {
         this.ox = x ;
         this.sd = d ;
         setLevel(pLevel) ;
+        this.ground = pLevel.getLandingCoordsY() + 8;
         setX(x + 8) ;
-        setY(18 + ((int)(y/15))*15) ;
-        this.ground = pLevel.getLandingCoordsY() + 12 ;
+        setY(10 + y) ;
         setAnimation(SpriteDirection.ARM, 0) ;
     }
 
-
     public void loadAnimation() {
-        if (getDirection() == CRASH) {
-
+        if (getDirection() == CRASH)
             setAnimation(SpriteDirection.ARM, 1) ;
-        }
     }
 
-
-    public final int action(){// throws DestroyedException {
+    public int action(){// throws DestroyedException {
         if (explodeCount > 0 && getDirection() == CRASH) {
             try {
                 explode();
@@ -44,19 +38,15 @@ public class Arm extends AbstractAnimatedSprite {
         }
 
         switch (sd) {
-            case Helicopter.DIR_RIGHT:
+            case Tank.DIR_RIGHT:
+                setY(167+ (int)(((Math.sin(0.15-(getX() - ox)/25f)) *18f))) ;
                 setX(getX()+15) ;
-                setY(getY() + (sx/2)) ;
                 break ;
-            case Helicopter.DIR_LEFT:
+            case Tank.DIR_LEFT:
                 setX(getX()-15) ;
-                setY(getY() - (sx/2)) ;
-                break ;
-            case Helicopter.DIR_CENTER:
-                setY(getY() + 15) ;
+                setY(167+ (int)(((Math.sin(0.15-(ox-getX())/25f)) *18f))) ;
                 break ;
         }
-
         if (hasCollision()) {
             try {
                 explode() ;
@@ -67,12 +57,10 @@ public class Arm extends AbstractAnimatedSprite {
         return -1 ;
     }
 
-    public final boolean hasCollision() {
+    public boolean hasCollision() {
         return (getX() > ox + C64Theme.SCREEN_WIDTH)
                 || (getX() < ox - C64Theme.SCREEN_WIDTH)
                 || (getY() < 0)
                 || (getY() >= ground) ;
     }
 }
-
-

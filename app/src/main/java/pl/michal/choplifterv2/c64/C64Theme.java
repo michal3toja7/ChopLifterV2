@@ -11,6 +11,7 @@ public final class C64Theme {
 	public final static int SCREEN_WIDTH = ChopLifterActivity.getWidth(ChopLifterActivity.getContext());
 	public final static int SCREEN_HEIGHT = ChopLifterActivity.getHeight(ChopLifterActivity.getContext());
 	public final static int SPRITE_SCALE = SCREEN_WIDTH/300;
+	public final static int FENCE_LINE = SCREEN_WIDTH - 50;
 
 	/* Colors*/
 	public final static int BLACK = C64Color.C64COLOR_0 ;

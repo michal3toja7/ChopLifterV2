@@ -1,6 +1,10 @@
 package pl.michal.choplifterv2.sprite;
 
+import pl.michal.choplifterv2.level.DestroyedException;
 import pl.michal.choplifterv2.level.InterfaceLevel;
+
+import static pl.michal.choplifterv2.c64.C64Theme.FENCE_LINE;
+import static pl.michal.choplifterv2.level.InterfaceLevel.MAXWIDTH;
 
 public class Tank extends AbstractAnimatedSprite {
     public final static int DIR_CENTER = 6 ;
@@ -9,14 +13,14 @@ public class Tank extends AbstractAnimatedSprite {
     public final static int DIR_LEFT = 1 ;
     public final static int DIR_RIGHT = 2 ;
 
-    private final static int IMPULSE = 50 ;
+    private final static int IMPULSE = 100 ;
     private final static int FULL_THROTTLE = 10 ;
 
     private int stepsX = 0 ;
     private int impulseX = 0 ;
 
     public Tank(InterfaceLevel pLevel) {
-        this(pLevel, (int) Math.round(Math.random() * (InterfaceLevel.MAXWIDTH-400)) + 100) ;
+        this(pLevel, (int) Math.round(Math.random() * (MAXWIDTH-400)) + 100) ;
     }
 
     public Tank(InterfaceLevel pLevel, int x) {
@@ -29,7 +33,17 @@ public class Tank extends AbstractAnimatedSprite {
 
 
     public int action() {
-        if (getDirection() == CRASH) return -1 ;
+
+        if (explodeCount > 0 && getDirection() == CRASH) {
+            try {
+                explode();
+            } catch (DestroyedException e) {
+                e.printStackTrace();
+            }
+
+            loadAnimation();
+            return -1 ;
+        }
 
         if (--impulseX <= 0) {
             if (getLevel().isHelicopterNear(getX())) {
@@ -53,14 +67,14 @@ public class Tank extends AbstractAnimatedSprite {
         }
 
         if (Math.random() > 0.97) {
-        //    shoot() ;
+            shoot() ;
         }
 
         setX(getX() + stepsX) ;
 
-        if (getX() < 50) {
+        if (getX() > MAXWIDTH) {
             stepsX = -stepsX ;
-        } else if (getX() > getLevel().getLandingCoordsX() - 200) {
+        } else if (getX() < FENCE_LINE +50) {
             stepsX = -stepsX ;
         }
         loadAnimation() ;
@@ -92,14 +106,14 @@ public class Tank extends AbstractAnimatedSprite {
     }
 
 
- /*   private void shoot() {
+    private void shoot() {
         getLevel().add(new TankArm(getX(), getY(), getDirection(), getLevel())) ;
     }
-
+/*
     public void remove() {
         Tank reinkarnation = new Tank(getLevel(), 0) ;
 
-        if (BattleField.getScrollx() < ILevel.MAXWIDTH/4) {
+        if (BattleField.getScrollx() < InterfaceLevel.MAXWIDTH/4) {
             reinkarnation.setX(BattleField.getScrollx() + 350) ;
         } else {
             reinkarnation.setX(BattleField.getScrollx() - 200) ;

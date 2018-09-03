@@ -26,6 +26,7 @@ public abstract class AbstractAnimatedSprite extends AbstractSprite implements I
     private String vectorImageName = null;
     private int frame = 1;
     int resID = 0;
+    public int explodeCount =0; //zmienna pomagająca wyświetlić eksplozję
 
 
     public enum SpriteDirection {
@@ -38,7 +39,7 @@ public abstract class AbstractAnimatedSprite extends AbstractSprite implements I
         TANK("tank", new String[]{"_center", "_left", "_right", "_crash"}, 2),
         STATION("station", new String[]{""}, 1),
         HOUSE("house", new String[]{"", "_crash"}, 1),
-        ARM("arm", new String[]{"", "crash"}, 2),
+        ARM("arm", new String[]{"", "_crash"}, 2),
         FENCE("fence", new String[]{""}, 1);
 
 
@@ -116,38 +117,34 @@ public abstract class AbstractAnimatedSprite extends AbstractSprite implements I
     }
 
     public boolean isNear(int x, int y) {
-        return (Math.abs((double) (x - getX())) < 10)
-                && Math.abs((double) (y - getY())) < 10;
+        return (Math.abs((double) (x - getX())) < (10 * SPRITE_SCALE))
+                && Math.abs((double) (y - getY())) < (10 * SPRITE_SCALE);
     }
 
     public final void explode() throws DestroyedException {
-        if (getDirection() != CRASH) {
-            (new ExplodeThread()).start();
+        if(explodeCount >=30){
+            explodeCount = 0;
+            remove();
+        }
+        else if(explodeCount <= 0 ){
+                setDirection(CRASH);
+            if (this instanceof Arm || this instanceof TankArm)
+                getLevel().manageCollision(getX(), getY());
+            explodeCount ++;
+        }
+        else if (explodeCount>0 && explodeCount <30){
+            explodeCount ++;
+        }
+     /*   if (getDirection() != CRASH) {
             if (this instanceof Arm) {
                 getLevel().manageCollision(getX(), getY());
             }
-        }
+        }*/
     }
 
     public synchronized void remove() {
         level.remove(this);
     }
-
-    public final class ExplodeThread extends Thread {
-        private final static int DELAY = 400;
-
-        public void run() {
-            try {
-                setDirection(CRASH);
-                loadAnimation();
-
-                Thread.sleep(DELAY);
-                remove();
-            } catch (InterruptedException e) {
-            }
-        }
-    }
-
 
     public int getDirection() {
         return direction;

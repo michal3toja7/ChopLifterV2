@@ -3,6 +3,9 @@ package pl.michal.choplifterv2.sprite;
 import pl.michal.choplifterv2.level.DestroyedException;
 import pl.michal.choplifterv2.level.InterfaceLevel;
 
+import static pl.michal.choplifterv2.c64.C64Theme.FENCE_LINE;
+import static pl.michal.choplifterv2.level.InterfaceLevel.MAXWIDTH;
+
 public class Human extends AbstractAnimatedSprite{
     public final static int DIR_CENTER = 6 ;
     public final static int DIR_INVISIBLE = 5 ;
@@ -15,8 +18,6 @@ public class Human extends AbstractAnimatedSprite{
 
     private int stepsX = 0 ;
     private int impulseX = 0 ;
-    private int stepsY = 0 ;
-    private int impulseY = 0 ;
 
     private boolean isInHelicopter = false ;
     private boolean isSaved = false ;
@@ -100,9 +101,9 @@ public class Human extends AbstractAnimatedSprite{
 
         setX(getX() + stepsX) ;
 
-        if (getX() < 50) {
+        if (getX() > MAXWIDTH) {
             stepsX = -stepsX ;
-        } else if (getX() > getLevel().getLandingCoordsX()-150) {
+        } else if (getX() < FENCE_LINE + 50) {
             stepsX = -stepsX ;
         }
 
