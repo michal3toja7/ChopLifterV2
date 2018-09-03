@@ -3,110 +3,118 @@ package pl.michal.choplifterv2.sprite;
 import android.graphics.Canvas;
 import android.support.graphics.drawable.VectorDrawableCompat;
 
+import pl.michal.choplifterv2.level.DestroyedException;
 import pl.michal.choplifterv2.level.InterfaceLevel;
 
 import static pl.michal.choplifterv2.ChopLifterActivity.getContext;
+import static pl.michal.choplifterv2.c64.C64Theme.SCREEN_WIDTH;
+import static pl.michal.choplifterv2.c64.C64Theme.SPRITE_SCALE;
 
 /**
  * Created by micha on 16.04.2018.
  */
 
-public abstract class AbstractAnimatedSprite extends AbstractSprite implements InterfaceSprite,InterfaceAnimatedSprite {
+public abstract class AbstractAnimatedSprite extends AbstractSprite implements InterfaceAnimatedSprite, InterfaceDestroyable {
+    public static int scrollX;
     private VectorDrawableCompat mMyVectorDrawable;
     private SpriteDirection actualSpriteDirection;
     private int actualIdDirection;
-    public final static int CRASH = -1 ;
-    private InterfaceLevel level ;
-    private int ticker = 0 ;
+    public final static int CRASH = -1;
+    private InterfaceLevel level;
+    private int ticker = 0;
     private int direction;
-    private String vectorImageName = null ;
-    private static int frame = 1;
+    private String vectorImageName = null;
+    private int frame = 1;
     int resID = 0;
 
 
     public enum SpriteDirection {
-        HEL_CENTER("helicopter_center",new String[] {"", "_land", "_left", "_right"}, 3),
-        HEL_CRASH("helicopter_crash",new String[] {""}, 4),
-        HEL_LEFT("helicopter_left", new String[] {"", "_back", "_down", "_halfback", "_halfdown", "_land"},3),
-        HEL_RIGHT("helicopter_right", new String[] {"", "_back", "_down", "_halfback", "_halfdown", "_land"},3),
-        HEL_ROTATE("helicopter_rotate", new String[] {"_left", "_right"},0),
-        HUMAN("human", new String[] {"_center", "_left_", "_right"},3),
-        TAN_CENTER("tank_center", new String[] {""},2),
-        TAN_LEFT("tank_left", new String[] {""},2),
-        TAN_RIGHT("tank_right", new String[] {""},2),
-        TAN_CRASH("tank_crash", new String[] {""},2),
-        STATION("station", new String[] {""},1),
-        HOUSE("house", new String[] {"","_crash"},1),
-        ARM("arm", new String[] {"", "crash"},2),
-        FENCE("fence", new String[] {""},1);
+        HEL_CENTER("helicopter_center", new String[]{"", "_land", "_left", "_right"}, 3),
+        HEL_CRASH("helicopter_crash", new String[]{""}, 4),
+        HEL_LEFT("helicopter_left", new String[]{"", "_back", "_down", "_halfback", "_halfdown", "_land"}, 3),
+        HEL_RIGHT("helicopter_right", new String[]{"", "_back", "_down", "_halfback", "_halfdown", "_land"}, 3),
+        HEL_ROTATE("helicopter_rotate", new String[]{"_left", "_right"}, 0),
+        HUMAN("human", new String[]{"_center", "_left_", "_right"}, 3),
+        TANK("tank", new String[]{"_center", "_left", "_right", "_crash"}, 2),
+        STATION("station", new String[]{""}, 1),
+        HOUSE("house", new String[]{"", "_crash"}, 1),
+        ARM("arm", new String[]{"", "crash"}, 2),
+        FENCE("fence", new String[]{""}, 1);
 
 
         private String spriteSide;
         private String directionName[];
         private int numberFrames;
+
         SpriteDirection(String spriteSide, String direction[], int numberFrames) {
             this.spriteSide = spriteSide;
             this.directionName = direction;
             this.numberFrames = numberFrames;
         }
-        public String getSpriteSide(){
+
+        public String getSpriteSide() {
             return spriteSide;
         }
-        public String[] getDirectionName(){
+
+        public String[] getDirectionName() {
             return directionName;
         }
-        public int getNumberFrames(){
+
+        public int getNumberFrames() {
             return numberFrames;
         }
     }
 
-/*    public final int heartBeat() throws DestroyedException {
+    public final int heartBeat() throws DestroyedException {
         if (vectorImageName != null) {
-            ticker = ++ticker % 16 ;
-      //      setIcon(vectorImageName[ticker % vectorImageName.length]) ;
+            //  ticker = ++ticker % 16 ;
+            //  refreshAnimation();
+            //      setIcon(vectorImageName[ticker % vectorImageName.length]) ;
         }
-        return action() ;
+       // refreshAnimation();
+        return action();
     }
-*/
+
     public final void setAnimation(SpriteDirection spriteDirection, int IdDirection) {
-            actualSpriteDirection = spriteDirection;
-            actualIdDirection = IdDirection;
+        actualSpriteDirection = spriteDirection;
+        actualIdDirection = IdDirection;
 
-            StringBuilder builderVectorImage = new StringBuilder();
-            String [] Direction = spriteDirection.getDirectionName();
+        StringBuilder builderVectorImage = new StringBuilder();
+        String[] Direction = spriteDirection.getDirectionName();
 
-            builderVectorImage.append(spriteDirection.getSpriteSide());
-            builderVectorImage.append(Direction[IdDirection]);
-            if (spriteDirection.getNumberFrames() != 0){
-                if(frame <= 0) {
-                    frame = 1;
-                }
-                if (frame <= spriteDirection.getNumberFrames()) {
-                    builderVectorImage.append(frame);
-                } else if (frame > spriteDirection.getNumberFrames()) {
-                    frame = 1;
-                    builderVectorImage.append(frame);
-                }
-
-            }
-
-            vectorImageName = builderVectorImage.toString();
-
-            frame ++;
-            if (frame > spriteDirection.getNumberFrames() || frame < 1){
+        builderVectorImage.append(spriteDirection.getSpriteSide());
+        builderVectorImage.append(Direction[IdDirection]);
+        if (spriteDirection.getNumberFrames() != 0) {
+            if (frame <= 0) {
                 frame = 1;
             }
+            if (frame <= spriteDirection.getNumberFrames()) {
+                builderVectorImage.append(frame);
+            } else if (frame > spriteDirection.getNumberFrames()) {
+                frame = 1;
+                builderVectorImage.append(frame);
+            }
+
+        }
+
+        vectorImageName = builderVectorImage.toString();
+
+        frame++;
+        if (frame > spriteDirection.getNumberFrames() || frame < 1) {
+            frame = 1;
+        }
     }
 
 
     public String getVectorImageName() {
         return vectorImageName;
     }
-    public void refreshAnimation(){
 
-        setAnimation(actualSpriteDirection,actualIdDirection);
+    public void refreshAnimation() {
+            setAnimation(actualSpriteDirection, actualIdDirection);
+
     }
-/*
+
     public boolean isNear(int x, int y) {
         return (Math.abs((double) (x - getX())) < 10)
                 && Math.abs((double) (y - getY())) < 10;
@@ -114,33 +122,32 @@ public abstract class AbstractAnimatedSprite extends AbstractSprite implements I
 
     public final void explode() throws DestroyedException {
         if (getDirection() != CRASH) {
-            (new ExplodeThread()).start() ;
-            if (this instanceof IArm) {
-                getLevel().manageCollision(getX(), getY()) ;
+            (new ExplodeThread()).start();
+            if (this instanceof Arm) {
+                getLevel().manageCollision(getX(), getY());
             }
         }
     }
 
     public synchronized void remove() {
-        level.remove(this) ;
+        level.remove(this);
     }
 
-    private final class ExplodeThread extends Thread {
-        private final static int DELAY = 400 ;
+    public final class ExplodeThread extends Thread {
+        private final static int DELAY = 400;
 
-        public void run () {
+        public void run() {
             try {
-                setDirection(CRASH) ;
-                loadAnimation() ;
+                setDirection(CRASH);
+                loadAnimation();
 
-                Thread.sleep(DELAY) ;
-                remove() ;
-            } catch (InterruptedException e) {}
+                Thread.sleep(DELAY);
+                remove();
+            } catch (InterruptedException e) {
+            }
         }
     }
 
-
-    */
 
     public int getDirection() {
         return direction;
@@ -151,18 +158,19 @@ public abstract class AbstractAnimatedSprite extends AbstractSprite implements I
     }
 
 
-
     public void draw(Canvas canvas) {
-   //     System.out.println(getVectorImageName());
-        resID = getContext().getResources().getIdentifier(this.getVectorImageName(), "drawable", getContext().getPackageName());
-        mMyVectorDrawable = VectorDrawableCompat.create(getContext().getResources(), resID, null);
+        //     System.out.println(getVectorImageName());
+
+        if (this.getX() >= (-scrollX - (SCREEN_WIDTH / 3)) && this.getX() <= (SCREEN_WIDTH - scrollX)) {
+            resID = getContext().getResources().getIdentifier(this.getVectorImageName(), "drawable", getContext().getPackageName());
+            mMyVectorDrawable = VectorDrawableCompat.create(getContext().getResources(), resID, null);
 
 
-        mMyVectorDrawable.setBounds(this.getX(), this.getY(), this.getX() + mMyVectorDrawable.getMinimumWidth() * 5, this.getY() + mMyVectorDrawable.getMinimumHeight() * 5);
-        mMyVectorDrawable.draw(canvas);
+            mMyVectorDrawable.setBounds(this.getX() + scrollX, this.getY(), (this.getX() + mMyVectorDrawable.getMinimumWidth() * SPRITE_SCALE) + scrollX, this.getY() + mMyVectorDrawable.getMinimumHeight() * SPRITE_SCALE);
+            mMyVectorDrawable.draw(canvas);
 
-        mMyVectorDrawable = null;
-
+            mMyVectorDrawable = null;
+        }
     }
 
 

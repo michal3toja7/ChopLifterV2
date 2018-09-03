@@ -1,24 +1,33 @@
 package pl.michal.choplifterv2.sprite;
 
-public interface InterfaceAnimatedSprite {
-    public interface ISprite {
+import pl.michal.choplifterv2.level.DestroyedException;
+import pl.michal.choplifterv2.level.InterfaceLevel;
 
-        /* Paint */
-        /** Paint method */
-      //  void paint (int x, Graphics g) ;
+public interface InterfaceAnimatedSprite {
+
+        /** Heartbeat called from game */
+       int heartBeat() throws DestroyedException;
+        /** Action to be implemented i.e. movement */
+        int action(); //throws DestroyedException ;
+
+        /** Load animation to icon i.e. dependant on direction */
+        void loadAnimation() ;
+
+        /** For determination whether this is near to another object */
+        boolean isNear(int x, int y) ;
+        /** Start explosion */
+        void explode() throws DestroyedException ;
+
+        void remove();
+
 
         /* Getter / Setter */
         /** Getter */
-        int getX() ;
+        InterfaceLevel getLevel() ;
         /** Setter */
-        void setX(int x) ;
-        /** Getter */
-        int getY() ;
-        /** Setter */
-        void setY(int y) ;
-        /** Getter */
-  //      BufferedImage getIcon() ;
-        /** Setter */
-    //    void setIcon(BufferedImage icon) ;
-    }
+        void setLevel(InterfaceLevel level) ;
+
+        void refreshAnimation();
+
+
 }

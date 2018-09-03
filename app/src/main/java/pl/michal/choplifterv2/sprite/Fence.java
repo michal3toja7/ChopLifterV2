@@ -7,5 +7,14 @@ public class Fence extends AbstractAnimatedSprite {
         setY(y) ;
         setAnimation(SpriteDirection.FENCE, 0);
     }
-    
+
+    @Override
+    public int action() {
+        return 0;
+    }
+
+    @Override
+    public void loadAnimation() {
+
+    }
 }

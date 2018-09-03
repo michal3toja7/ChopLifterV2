@@ -9,10 +9,12 @@ import pl.michal.choplifterv2.sprite.InterfaceAnimatedSprite;
 import pl.michal.choplifterv2.sprite.InterfaceSprite;
 import pl.michal.choplifterv2.sprite.Station;
 
+import static pl.michal.choplifterv2.c64.C64Theme.SCREEN_WIDTH;
+
 public interface InterfaceLevel {
     /*Constants */
     /** Max widths of a level */
-    public final static int MAXWIDTH = 1920 ;
+    public final static int MAXWIDTH = SCREEN_WIDTH*4 ;
 
 
     /* Maps */
@@ -41,7 +43,7 @@ public interface InterfaceLevel {
 
     /* Explosion management */
     /** Explosions Fire fire fire */
- //   void manageCollision(int x, int y) throws DestroyedException ;
+    void manageCollision(int x, int y) throws DestroyedException ;
 
     /* Coordinates */
     /** Level start */
@@ -81,4 +83,6 @@ public interface InterfaceLevel {
     Station getStation() ;
 
     void draw(Canvas canvas);
+
+    void refreshAnimation();
 }

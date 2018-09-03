@@ -15,6 +15,8 @@ public class Human extends AbstractAnimatedSprite{
 
     private int stepsX = 0 ;
     private int impulseX = 0 ;
+    private int stepsY = 0 ;
+    private int impulseY = 0 ;
 
     private boolean isInHelicopter = false ;
     private boolean isSaved = false ;
@@ -104,7 +106,7 @@ public class Human extends AbstractAnimatedSprite{
             stepsX = -stepsX ;
         }
 
- /*       if (getLevel().getHelicopter().canEnter(getX())) {
+        if (getLevel().getHelicopter().canEnter(getX())) {
             if (getLevel().getHelicopter().isAlive()
                     && (getLevel().getPassengers() < 8)) {
                 isInHelicopter = true ;
@@ -113,7 +115,7 @@ public class Human extends AbstractAnimatedSprite{
                 return -1 ; // Entered
             }
         }
-*/
+
         loadAnimation() ;
         return -1 ;
     }
@@ -140,5 +142,8 @@ public class Human extends AbstractAnimatedSprite{
     public boolean isInHelicopter() {
         return isInHelicopter;
     }
+
+
+
 }
 

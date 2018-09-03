@@ -38,11 +38,15 @@ public class Battlefield implements GameObject {
         int height= C64Theme.SCREEN_HEIGHT;
 
         paint.setColor(C64Theme.GRAY);
-        canvas.drawRect(0,height/2,width,height,paint);
+        canvas.drawRect(0,2*(height/3),width,height,paint);
 
         if (level != null) {
+           // level.getHelicopter().refreshAnimation();
+            level.refreshAnimation();
             level.draw(canvas) ;
+            level.heartBeat();
         }
+
 
 
         if (stars==null)
@@ -63,6 +67,7 @@ public class Battlefield implements GameObject {
     }
     public void onTap(){
         level.getHelicopter().toggleDirection();
+        level.getHelicopter().shoot();
     }
 
 

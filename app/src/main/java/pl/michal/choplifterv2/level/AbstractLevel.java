@@ -6,12 +6,17 @@ import java.util.ArrayList;
 import java.util.List;
 
 import pl.michal.choplifterv2.c64.C64Theme;
+import pl.michal.choplifterv2.sprite.Arm;
 import pl.michal.choplifterv2.sprite.Fence;
 import pl.michal.choplifterv2.sprite.Helicopter;
 import pl.michal.choplifterv2.sprite.Human;
 import pl.michal.choplifterv2.sprite.InterfaceAnimatedSprite;
 import pl.michal.choplifterv2.sprite.InterfaceSprite;
 import pl.michal.choplifterv2.sprite.Station;
+import pl.michal.choplifterv2.sprite.Tank;
+
+import static pl.michal.choplifterv2.c64.C64Theme.SCREEN_HEIGHT;
+import static pl.michal.choplifterv2.c64.C64Theme.SCREEN_WIDTH;
 
 public abstract class AbstractLevel implements InterfaceLevel{
 
@@ -55,7 +60,7 @@ public abstract class AbstractLevel implements InterfaceLevel{
      * Pings all active elements and sets view (scrollx)
      */
 
- /*   public final int heartBeat() {
+    public final int heartBeat() {
         int result = -1 ;
         int newScrollX = -1 ;
 
@@ -64,7 +69,7 @@ public abstract class AbstractLevel implements InterfaceLevel{
             try {
                 result = getActiveMap(i).heartBeat() ;
             } catch (DestroyedException de) {
-                remove(getActiveMap(i)) ;
+                remove((InterfaceSprite) getActiveMap(i)) ;
             }
             if (result > -1) {
                 newScrollX = result ;
@@ -73,7 +78,7 @@ public abstract class AbstractLevel implements InterfaceLevel{
 
         return newScrollX ;
     }
-*/
+
 
     // ------------------------------------------------------------------------
 
@@ -81,13 +86,13 @@ public abstract class AbstractLevel implements InterfaceLevel{
      * This handles explosions of arm1. Looks for destroyables near to the
      * explosion.
      */
- /*   public void manageCollision(int x, int y) throws DestroyedException{
+    public void manageCollision(int x, int y) throws DestroyedException{
         // Only collide in view
-        int sx = getHelicopter().getV() ;
+        int sx = getHelicopter().getX() ;
         if ((x < sx) || (x > sx + C64Theme.SCREEN_WIDTH)) return ;
 
         for (int i = 0; i < getActiveMap().size(); ++i) {
-            if (! (getActiveMap(i) instanceof IArm)) {
+            if (! (getActiveMap(i) instanceof Arm)) {
                 if (getActiveMap(i).isNear(x, y)) {
 
                     if (getActiveMap(i) instanceof Human) {
@@ -107,7 +112,7 @@ public abstract class AbstractLevel implements InterfaceLevel{
         }
     }
 
- */   // ------------------------------------------------------------------------
+    // ------------------------------------------------------------------------
 
     /**
      * Add element to game
@@ -139,7 +144,7 @@ public abstract class AbstractLevel implements InterfaceLevel{
      * Getter
      */
     public boolean isHelicopterNear(int x) {
-        return (getHelicopter().getY() > getLandingCoordsY() - 30)
+        return  (getHelicopter().getY() > getLandingCoordsY() - 30)
                 && Math.abs((double) (x - getHelicopter().getX())) < 100 ;
     }
 
@@ -250,10 +255,11 @@ public abstract class AbstractLevel implements InterfaceLevel{
     public Station getStation() {
         if (station == null) {
             setStation(new Station(getStartX() + 125, getStartY() - 2));
-            add(new Fence(getStartX()-10, getStartY()+13)) ; // These ain't no
-            add(new Fence(getStartX()+50, getStartY()+15)) ; // real coords
-            add(new Fence(getStartX()+170, getStartY()+19)) ;
-            add(new Fence(getStartX()+350, getStartY()+25)) ;
+            add(new Fence(SCREEN_WIDTH, getStartY())) ;
+            add(new Fence(SCREEN_WIDTH , getStartY()+ ((SCREEN_HEIGHT/3)/4))) ; // These ain't no
+            add(new Fence(SCREEN_WIDTH, getStartY()+((SCREEN_HEIGHT/3)/2))) ; // real coords
+            add(new Fence(SCREEN_WIDTH, getStartY()+((SCREEN_HEIGHT/3)/4*3))) ;
+
         }
         return station ;
     }
@@ -291,6 +297,15 @@ public abstract class AbstractLevel implements InterfaceLevel{
      */
     public void setStarted(boolean started) {
         this.started = started ;
+    }
+
+    public void refreshAnimation(){
+        for (int i = 0; i < getActiveMap().size(); ++i) {
+            if (getActiveMap(i) instanceof Tank || getActiveMap(i) instanceof Human || getActiveMap(i) instanceof Helicopter) {
+                getActiveMap(i).refreshAnimation();
+            }
+        }
+
     }
 
 

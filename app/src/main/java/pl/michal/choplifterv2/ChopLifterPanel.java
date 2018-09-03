@@ -30,7 +30,7 @@ public class ChopLifterPanel extends SurfaceView implements SurfaceHolder.Callba
 
         getHolder().addCallback(this);
 
-        battlefield = new Battlefield();
+      //  battlefield = new Battlefield();
 
 
 
@@ -44,7 +44,7 @@ public class ChopLifterPanel extends SurfaceView implements SurfaceHolder.Callba
 
         getHolder().addCallback(this);
 
-        battlefield = new Battlefield();
+     //   battlefield = new Battlefield();
 
 
         thread = new MainThread(getHolder(), this);
@@ -93,8 +93,10 @@ public class ChopLifterPanel extends SurfaceView implements SurfaceHolder.Callba
     public void draw(Canvas canvas)
     {
         super.draw(canvas);
+       if(battlefield==null){
+           battlefield = new Battlefield();
+       }
         battlefield.draw(canvas);
-
     }
 
 }

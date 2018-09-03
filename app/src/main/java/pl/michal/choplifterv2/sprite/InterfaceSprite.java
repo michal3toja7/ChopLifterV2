@@ -3,14 +3,10 @@ package pl.michal.choplifterv2.sprite;
 import android.graphics.Canvas;
 
 public interface InterfaceSprite {
-    void draw(Canvas canvas);
-
-    public interface ISprite {
 
         /* Paint */
         /** Paint method */
-     //   void paint (int x, Graphics g) ;
-
+        void draw(Canvas canvas);
         /* Getter / Setter */
         /** Getter */
         int getX() ;
@@ -25,4 +21,4 @@ public interface InterfaceSprite {
         /** Setter */
      //   void setIcon(BufferedImage icon) ;
     }
-}
+
