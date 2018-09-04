@@ -4,6 +4,8 @@ import pl.michal.choplifterv2.c64.C64Theme;
 import pl.michal.choplifterv2.level.DestroyedException;
 import pl.michal.choplifterv2.level.InterfaceLevel;
 
+import static pl.michal.choplifterv2.c64.C64Theme.SPRITE_SCALE;
+
 public class TankArm extends AbstractAnimatedSprite {
     private int ox = 0 ;
     private int sd = -1 ;
@@ -26,6 +28,8 @@ public class TankArm extends AbstractAnimatedSprite {
     }
 
     public int action(){// throws DestroyedException {
+        System.out.println("Tank Arm X: "+ getX());
+        System.out.println("Tank Arm Y: "+ getY());
         if (explodeCount > 0 && getDirection() == CRASH) {
             try {
                 explode();
@@ -39,12 +43,12 @@ public class TankArm extends AbstractAnimatedSprite {
 
         switch (sd) {
             case Tank.DIR_RIGHT:
-                setY(167+ (int)(((Math.sin(0.15-(getX() - ox)/25f)) *18f))) ;
+                setY(getLevel().getStartY()+ (int)(((Math.sin(0.15-(getX() - ox)/25f)) *18f*SPRITE_SCALE))) ;
                 setX(getX()+15) ;
                 break ;
             case Tank.DIR_LEFT:
                 setX(getX()-15) ;
-                setY(167+ (int)(((Math.sin(0.15-(ox-getX())/25f)) *18f))) ;
+                setY(getLevel().getStartY()+ (int)(((Math.sin(0.15-(ox-getX())/25f)) *18f*SPRITE_SCALE))) ;
                 break ;
         }
         if (hasCollision()) {
@@ -53,6 +57,7 @@ public class TankArm extends AbstractAnimatedSprite {
             } catch (DestroyedException e) {
                 e.printStackTrace();
             }
+            loadAnimation();
         }
         return -1 ;
     }

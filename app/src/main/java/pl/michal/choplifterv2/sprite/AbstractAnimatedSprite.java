@@ -15,7 +15,9 @@ import static pl.michal.choplifterv2.c64.C64Theme.SPRITE_SCALE;
  */
 
 public abstract class AbstractAnimatedSprite extends AbstractSprite implements InterfaceAnimatedSprite, InterfaceDestroyable {
-    public static int scrollX;
+    private static int scrollX =0;
+    private static int minVisibleX =0;
+    private static int maxVisibleX = SCREEN_WIDTH;
     private VectorDrawableCompat mMyVectorDrawable;
     private SpriteDirection actualSpriteDirection;
     private int actualIdDirection;
@@ -27,6 +29,7 @@ public abstract class AbstractAnimatedSprite extends AbstractSprite implements I
     private int frame = 1;
     int resID = 0;
     public int explodeCount =0; //zmienna pomagająca wyświetlić eksplozję
+    private boolean invisible = false;
 
 
     public enum SpriteDirection {
@@ -41,6 +44,7 @@ public abstract class AbstractAnimatedSprite extends AbstractSprite implements I
         HOUSE("house", new String[]{"", "_crash"}, 1),
         ARM("arm", new String[]{"", "_crash"}, 2),
         FENCE("fence", new String[]{""}, 1);
+
 
 
         private String spriteSide;
@@ -158,7 +162,9 @@ public abstract class AbstractAnimatedSprite extends AbstractSprite implements I
     public void draw(Canvas canvas) {
         //     System.out.println(getVectorImageName());
 
-        if (this.getX() >= (-scrollX - (SCREEN_WIDTH / 3)) && this.getX() <= (SCREEN_WIDTH - scrollX)) {
+        if (this.getX() >= minVisibleX && this.getX() <= maxVisibleX) {
+            if(this instanceof Human && invisible)
+                return;
             resID = getContext().getResources().getIdentifier(this.getVectorImageName(), "drawable", getContext().getPackageName());
             mMyVectorDrawable = VectorDrawableCompat.create(getContext().getResources(), resID, null);
 
@@ -168,6 +174,7 @@ public abstract class AbstractAnimatedSprite extends AbstractSprite implements I
 
             mMyVectorDrawable = null;
         }
+
     }
 
 
@@ -178,6 +185,20 @@ public abstract class AbstractAnimatedSprite extends AbstractSprite implements I
     public void setLevel(InterfaceLevel level) {
         this.level = level;
     }
+    public void setInvisible(boolean invisible){
+        this.invisible = invisible;
+    }
 
+    public void setScrollX(int scrollX){
+        this.scrollX = scrollX;
+        if (this instanceof Helicopter){
+            minVisibleX = -scrollX - (SCREEN_WIDTH / 3);
+            maxVisibleX = SCREEN_WIDTH - scrollX;
+
+        }
+    }
+    public int getScrollX(){
+        return  scrollX;
+    }
 
 }

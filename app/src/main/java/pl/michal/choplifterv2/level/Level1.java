@@ -24,7 +24,7 @@ public class Level1 extends AbstractLevel {
         add(openHouse) ;
         openHouse.remove() ; /// Open (not remove) house1
 
-       for (int i=0; i < 10; ++i)
+     //  for (int i=0; i < 10; ++i)
             add(new Tank(this)) ;
     }
 

@@ -55,7 +55,7 @@ public class Human extends AbstractAnimatedSprite{
                 // Entered station
                 getLevel().incSaved() ;
                 loadAnimation() ;
- //               throw new DestroyedException() ;
+                remove();
             } else {
                 // ExitHelicopter and enter station
                 if (impulseX-- <= 0) {
@@ -123,12 +123,15 @@ public class Human extends AbstractAnimatedSprite{
 
     public void loadAnimation() {
         if (isInHelicopter) {
- //           setAnimation(humanInvisible) ;
+            setInvisible(true);
         } else if (stepsX == 0) {
+            setInvisible(false);
             setAnimation(SpriteDirection.HUMAN, 0) ;
         } else if (stepsX > 0) {
+            setInvisible(false);
             setAnimation(SpriteDirection.HUMAN, 2) ;
         } else if (stepsX < 0){
+            setInvisible(false);
             setAnimation(SpriteDirection.HUMAN, 1) ;
         } else if (getDirection() == CRASH) {
             System.out.println("Human crashed") ;

@@ -101,7 +101,7 @@ public abstract class AbstractLevel implements InterfaceLevel{
                         if (! ((Human) getActiveMap(i)).isInHelicopter()) {
                             incKilled() ;
                             getActiveMap(i).explode() ;
-                            throw new DestroyedException() ;
+                            getActiveMap(i).remove();
                         } else {
                             continue ;
                         }

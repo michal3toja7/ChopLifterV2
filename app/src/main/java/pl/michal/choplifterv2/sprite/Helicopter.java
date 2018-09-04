@@ -1,5 +1,6 @@
 package pl.michal.choplifterv2.sprite;
 
+import pl.michal.choplifterv2.level.DestroyedException;
 import pl.michal.choplifterv2.level.InterfaceLevel;
 
 import static pl.michal.choplifterv2.c64.C64Theme.SCREEN_WIDTH;
@@ -34,6 +35,8 @@ public class Helicopter extends AbstractAnimatedSprite {
     private int impulseY = 0;
     private int oldX = 0;
     private int oldY = 0;
+    private double angle;
+    private double power;
 
     public Helicopter(InterfaceLevel pLevel) {
         setX(pLevel.getLandingCoordsX());
@@ -42,8 +45,6 @@ public class Helicopter extends AbstractAnimatedSprite {
         setLevel(pLevel);
         setDirection(DIR_CENTER);
         loadAnimation();
-        System.out.println("Ja żyję!");
-        System.out.println(getVectorImageName());
 
 
     }
@@ -66,6 +67,8 @@ public class Helicopter extends AbstractAnimatedSprite {
 
 
     public void move(double angle, double power) {
+        this.angle = angle;
+        this.power = power;
         oldX = getX();
         oldY = getY();
         setX((int) (oldX - ((Math.cos(angle) * power) * GRAVITY)));
@@ -94,15 +97,15 @@ public class Helicopter extends AbstractAnimatedSprite {
             stepsY = 0;
             setY(50);
         }
-        System.out.println("X= " + getX());
-        System.out.println("Y= " + getY());
+        System.out.println("Helicopter X= " + getX());
+        System.out.println("Helicopter Y= " + getY());
 
-        if (getX() > (SCREEN_WIDTH - (SCREEN_WIDTH / 9)) - scrollX) {
-            scrollX = (SCREEN_WIDTH - (SCREEN_WIDTH / 9)) - getX();
+        if (getX() > (SCREEN_WIDTH - (SCREEN_WIDTH / 9)) - getScrollX()) {
+            setScrollX ((SCREEN_WIDTH - (SCREEN_WIDTH / 9)) - getX());
             stepsX = getX() - oldX;
         }
-        if (getX() < (SCREEN_WIDTH / 9) - scrollX) {
-            scrollX = ((SCREEN_WIDTH / 9)) - getX();
+        if (getX() < (SCREEN_WIDTH / 9) - getScrollX()) {
+            setScrollX (((SCREEN_WIDTH / 9)) - getX());
             stepsX = getX() - oldX;
         }
 
@@ -137,7 +140,19 @@ public class Helicopter extends AbstractAnimatedSprite {
 
     @Override
     public int action() {
-        return 0;
+        move(angle, power);
+
+        if (explodeCount > 0 && getDirection() == CRASH) {
+            try {
+                explode();
+            } catch (DestroyedException e) {
+                e.printStackTrace();
+            }
+            loadAnimation();
+        }
+
+
+        return -1;
     }
 
     public void loadAnimation() {

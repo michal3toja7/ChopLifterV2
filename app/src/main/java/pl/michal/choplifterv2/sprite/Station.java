@@ -1,6 +1,7 @@
 package pl.michal.choplifterv2.sprite;
 
 
+import static pl.michal.choplifterv2.c64.C64Theme.SPRITE_SCALE;
 
 public class Station extends  AbstractAnimatedSprite{
 
@@ -12,8 +13,8 @@ public class Station extends  AbstractAnimatedSprite{
     }
 
     public boolean canEnter(int x) {
-        return (x > (getX()+85)-4)
-                &&  (x < (getX()+85)+4) ;
+        return (x > (getX()+85*SPRITE_SCALE)-4)
+                &&  (x < (getX()+85*SPRITE_SCALE)+4) ;
     }
 
     @Override
