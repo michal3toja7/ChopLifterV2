@@ -43,12 +43,12 @@ public class TankArm extends AbstractAnimatedSprite {
 
         switch (sd) {
             case Tank.DIR_RIGHT:
-                setY(getLevel().getStartY()+ (int)(((Math.sin(0.15-(getX() - ox)/25f)) *18f*SPRITE_SCALE))) ;
-                setX(getX()+15) ;
+                setY(getLevel().getStartY()+10+ (int)(((Math.sin(0.15-(getX() - ox)/(25f*SPRITE_SCALE))) *18f*SPRITE_SCALE))) ;
+                setX(getX()+15);
                 break ;
             case Tank.DIR_LEFT:
                 setX(getX()-15) ;
-                setY(getLevel().getStartY()+ (int)(((Math.sin(0.15-(ox-getX())/25f)) *18f*SPRITE_SCALE))) ;
+                setY(getLevel().getStartY()+10+ (int)(((Math.sin(0.15-(ox-getX())/(25f*SPRITE_SCALE))) *18f*SPRITE_SCALE))) ;
                 break ;
         }
         if (hasCollision()) {

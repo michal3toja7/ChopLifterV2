@@ -121,8 +121,8 @@ public abstract class AbstractAnimatedSprite extends AbstractSprite implements I
     }
 
     public boolean isNear(int x, int y) {
-        return (Math.abs((double) (x - getX())) < (10 * SPRITE_SCALE))
-                && Math.abs((double) (y - getY())) < (10 * SPRITE_SCALE);
+            return (Math.abs((double) (x - getX())) < (10 * SPRITE_SCALE))
+                    && Math.abs((double) (y - getY())) < (10 * SPRITE_SCALE);
     }
 
     public final void explode() throws DestroyedException {
@@ -139,11 +139,6 @@ public abstract class AbstractAnimatedSprite extends AbstractSprite implements I
         else if (explodeCount>0 && explodeCount <30){
             explodeCount ++;
         }
-     /*   if (getDirection() != CRASH) {
-            if (this instanceof Arm) {
-                getLevel().manageCollision(getX(), getY());
-            }
-        }*/
     }
 
     public synchronized void remove() {

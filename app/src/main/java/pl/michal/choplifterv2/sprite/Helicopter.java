@@ -86,7 +86,11 @@ public class Helicopter extends AbstractAnimatedSprite {
                 stepsY = 0;
                 impulseX = 0;
                 impulseY = 0;
-                //explode() ;
+                try {
+                    explode() ;
+                } catch (DestroyedException e) {
+                    e.printStackTrace();
+                }
             } else if (Math.sqrt(Math.abs(stepsY) * Math.abs(stepsY))
                     > FULL_THROTTLE / 4) {
                 setDirection(getDirection() + 100); // 100 + x is the landing ani
