@@ -71,12 +71,6 @@ public abstract class AbstractAnimatedSprite extends AbstractSprite implements I
     }
 
     public final int heartBeat() throws DestroyedException {
-        if (vectorImageName != null) {
-            //  ticker = ++ticker % 16 ;
-            //  refreshAnimation();
-            //      setIcon(vectorImageName[ticker % vectorImageName.length]) ;
-        }
-       // refreshAnimation();
         return action();
     }
 
@@ -155,8 +149,6 @@ public abstract class AbstractAnimatedSprite extends AbstractSprite implements I
 
 
     public void draw(Canvas canvas) {
-        //     System.out.println(getVectorImageName());
-
         if (this.getX() >= minVisibleX && this.getX() <= maxVisibleX) {
             if(this instanceof Human && invisible)
                 return;

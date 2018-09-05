@@ -28,8 +28,6 @@ public class TankArm extends AbstractAnimatedSprite {
     }
 
     public int action(){// throws DestroyedException {
-        System.out.println("Tank Arm X: "+ getX());
-        System.out.println("Tank Arm Y: "+ getY());
         if (explodeCount > 0 && getDirection() == CRASH) {
             try {
                 explode();

@@ -91,6 +91,7 @@ public class Helicopter extends AbstractAnimatedSprite {
                 } catch (DestroyedException e) {
                     e.printStackTrace();
                 }
+                return;
             } else if (Math.sqrt(Math.abs(stepsY) * Math.abs(stepsY))
                     > FULL_THROTTLE / 4) {
                 setDirection(getDirection() + 100); // 100 + x is the landing ani
@@ -101,8 +102,8 @@ public class Helicopter extends AbstractAnimatedSprite {
             stepsY = 0;
             setY(50);
         }
-        System.out.println("Helicopter X= " + getX());
-        System.out.println("Helicopter Y= " + getY());
+//        System.out.println("Helicopter X= " + getX());
+//        System.out.println("Helicopter Y= " + getY());
 
         if (getX() > (SCREEN_WIDTH - (SCREEN_WIDTH / 9)) - getScrollX()) {
             setScrollX ((SCREEN_WIDTH - (SCREEN_WIDTH / 9)) - getX());

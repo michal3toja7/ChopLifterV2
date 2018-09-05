@@ -60,13 +60,13 @@ public class Tank extends AbstractAnimatedSprite {
                 stepsX = Math.random() > 0.5 ? -FULL_THROTTLE : FULL_THROTTLE ;
                 int newDirection = stepsX > 0 ? DIR_RIGHT : DIR_LEFT ;
                 if (newDirection != getDirection()) {
-                  //  toggleDirection() ;
+                    setDirection(newDirection);
                     return -1 ;
                 }
             }
         }
 
-        if (Math.random() > 0.97) {
+        if (Math.random() > 0.67) {
             shoot() ;
         }
 
@@ -128,4 +128,5 @@ public class Tank extends AbstractAnimatedSprite {
     public String toString() {
         return "Tank" ;
     }
+
 }
