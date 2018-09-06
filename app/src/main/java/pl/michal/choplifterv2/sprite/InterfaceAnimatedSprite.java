@@ -8,7 +8,7 @@ public interface InterfaceAnimatedSprite {
         /** Heartbeat called from game */
        int heartBeat() throws DestroyedException;
         /** Action to be implemented i.e. movement */
-        int action(); //throws DestroyedException ;
+        int action() throws DestroyedException;
 
         /** Load animation to icon i.e. dependant on direction */
         void loadAnimation() ;

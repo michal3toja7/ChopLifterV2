@@ -31,14 +31,9 @@ public class Arm extends AbstractAnimatedSprite {
     }
 
 
-    public final int action(){// throws DestroyedException {
+    public final int action() throws DestroyedException {
         if (explodeCount > 0 && getDirection() == CRASH) {
-            try {
                 explode();
-            } catch (DestroyedException e) {
-                e.printStackTrace();
-            }
-
             loadAnimation();
             return -1 ;
         }
@@ -58,11 +53,7 @@ public class Arm extends AbstractAnimatedSprite {
         }
 
         if (hasCollision()) {
-            try {
                 explode() ;
-            } catch (DestroyedException e) {
-                e.printStackTrace();
-            }
         }
         return -1 ;
     }

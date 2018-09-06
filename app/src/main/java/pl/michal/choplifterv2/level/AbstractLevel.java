@@ -88,7 +88,7 @@ public abstract class AbstractLevel implements InterfaceLevel{
      * This handles explosions of arm1. Looks for destroyables near to the
      * explosion.
      */
-    public void manageCollision(int x, int y) throws DestroyedException{
+    public void manageCollision(int x, int y, InterfaceAnimatedSprite spriteWhoDitExplosion) throws DestroyedException{
         // Only collide in view
     //    int sx = getHelicopter().getX() ;
      //   if ((x < sx) || (x > sx + C64Theme.SCREEN_WIDTH)) return ;
@@ -96,7 +96,8 @@ public abstract class AbstractLevel implements InterfaceLevel{
         for (int i = 0; i < getActiveMap().size(); ++i) {
             if (! (getActiveMap(i) instanceof Arm || getActiveMap(i) instanceof TankArm)) {
                 if (getActiveMap(i).isNear(x, y)) {
-
+                    if(getActiveMap(i) instanceof Tank && spriteWhoDitExplosion instanceof TankArm)
+                        continue;
                     if (getActiveMap(i) instanceof Human) {
                         if (! ((Human) getActiveMap(i)).isInHelicopter()) {
                             incKilled() ;

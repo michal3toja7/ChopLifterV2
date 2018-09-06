@@ -122,13 +122,16 @@ public abstract class AbstractAnimatedSprite extends AbstractSprite implements I
     public final void explode() throws DestroyedException {
         if(explodeCount >=30){
             explodeCount = 0;
+            if(this instanceof Helicopter)
+                return;
             remove();
         }
         else if(explodeCount <= 0 ){
-                setDirection(CRASH);
+
             if (this instanceof Arm || this instanceof TankArm)
-                getLevel().manageCollision(getX(), getY());
-            explodeCount ++;
+                getLevel().manageCollision(getX(), getY(), this);
+                setDirection(CRASH);
+                explodeCount = 1;
         }
         else if (explodeCount>0 && explodeCount <30){
             explodeCount ++;

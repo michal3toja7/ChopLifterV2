@@ -15,6 +15,7 @@ import android.view.WindowManager;
 import com.erz.joysticklibrary.JoyStick;
 
 import pl.michal.choplifterv2.gui.Controller;
+import pl.michal.choplifterv2.level.DestroyedException;
 
 public class ChopLifterActivity extends AppCompatActivity implements JoyStick.JoyStickListener{
     private static Context mContext;
@@ -108,7 +109,11 @@ public class ChopLifterActivity extends AppCompatActivity implements JoyStick.Jo
     public void onMove(JoyStick joyStick, double angle, double power, int direction) {
         switch (joyStick.getId()) {
             case R.id.joy1:
-                chopLifterPanel.battlefield.move(angle, power);
+                try {
+                    chopLifterPanel.battlefield.move(angle, power);
+                } catch (DestroyedException e) {
+                    e.printStackTrace();
+                }
                 break;
             case R.id.joy2:
            //     gameView.rotate(angle);

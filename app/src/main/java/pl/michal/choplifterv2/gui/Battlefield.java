@@ -4,6 +4,7 @@ import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.support.graphics.drawable.VectorDrawableCompat;
 import pl.michal.choplifterv2.c64.C64Theme;
+import pl.michal.choplifterv2.level.DestroyedException;
 import pl.michal.choplifterv2.level.InterfaceLevel;
 import pl.michal.choplifterv2.level.Level1;
 import pl.michal.choplifterv2.sprite.Helicopter;
@@ -62,7 +63,7 @@ public class Battlefield implements GameObject {
 
 
 
-    public void move(double angle, double power) {
+    public void move(double angle, double power) throws DestroyedException {
     level.getHelicopter().move(angle, power);
     }
     public void onTap(){

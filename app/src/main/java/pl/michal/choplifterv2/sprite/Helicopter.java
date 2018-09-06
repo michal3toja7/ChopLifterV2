@@ -66,7 +66,7 @@ public class Helicopter extends AbstractAnimatedSprite {
     }
 
 
-    public void move(double angle, double power) {
+    public void move(double angle, double power) throws DestroyedException {
         this.angle = angle;
         this.power = power;
         oldX = getX();
@@ -86,12 +86,7 @@ public class Helicopter extends AbstractAnimatedSprite {
                 stepsY = 0;
                 impulseX = 0;
                 impulseY = 0;
-                try {
                     explode() ;
-                } catch (DestroyedException e) {
-                    e.printStackTrace();
-                }
-                return;
             } else if (Math.sqrt(Math.abs(stepsY) * Math.abs(stepsY))
                     > FULL_THROTTLE / 4) {
                 setDirection(getDirection() + 100); // 100 + x is the landing ani
@@ -102,8 +97,6 @@ public class Helicopter extends AbstractAnimatedSprite {
             stepsY = 0;
             setY(50);
         }
-//        System.out.println("Helicopter X= " + getX());
-//        System.out.println("Helicopter Y= " + getY());
 
         if (getX() > (SCREEN_WIDTH - (SCREEN_WIDTH / 9)) - getScrollX()) {
             setScrollX ((SCREEN_WIDTH - (SCREEN_WIDTH / 9)) - getX());
@@ -144,15 +137,10 @@ public class Helicopter extends AbstractAnimatedSprite {
     }
 
     @Override
-    public int action() {
+    public int action() throws DestroyedException {
         move(angle, power);
-
         if (explodeCount > 0 && getDirection() == CRASH) {
-            try {
                 explode();
-            } catch (DestroyedException e) {
-                e.printStackTrace();
-            }
             loadAnimation();
         }
 
@@ -256,6 +244,7 @@ public class Helicopter extends AbstractAnimatedSprite {
             getLevel().incKilled();
             getLevel().decPassengers();
         }
+        this.remove();
     }
 
     public void shoot() {

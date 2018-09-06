@@ -4,6 +4,7 @@ import pl.michal.choplifterv2.level.DestroyedException;
 import pl.michal.choplifterv2.level.InterfaceLevel;
 
 import static pl.michal.choplifterv2.c64.C64Theme.FENCE_LINE;
+import static pl.michal.choplifterv2.c64.C64Theme.SCREEN_WIDTH;
 import static pl.michal.choplifterv2.level.InterfaceLevel.MAXWIDTH;
 
 public class Tank extends AbstractAnimatedSprite {
@@ -20,7 +21,7 @@ public class Tank extends AbstractAnimatedSprite {
     private int impulseX = 0 ;
 
     public Tank(InterfaceLevel pLevel) {
-        this(pLevel, (int) Math.round(Math.random() * (MAXWIDTH-400)) + 100) ;
+        this(pLevel, (int) Math.round(Math.random() * (MAXWIDTH-400)) + SCREEN_WIDTH) ;
     }
 
     public Tank(InterfaceLevel pLevel, int x) {
@@ -32,15 +33,10 @@ public class Tank extends AbstractAnimatedSprite {
     }
 
 
-    public int action() {
+    public int action() throws DestroyedException {
 
         if (explodeCount > 0 && getDirection() == CRASH) {
-            try {
                 explode();
-            } catch (DestroyedException e) {
-                e.printStackTrace();
-            }
-
             loadAnimation();
             return -1 ;
         }
@@ -66,7 +62,7 @@ public class Tank extends AbstractAnimatedSprite {
             }
         }
 
-        if (Math.random() > 0.67) {
+        if (Math.random() > 0.98) {
             shoot() ;
         }
 
@@ -109,8 +105,8 @@ public class Tank extends AbstractAnimatedSprite {
     private void shoot() {
         getLevel().add(new TankArm(getX(), getY(), getDirection(), getLevel())) ;
     }
-/*
-    public void remove() {
+
+/*    public void remove() {
         Tank reinkarnation = new Tank(getLevel(), 0) ;
 
         if (BattleField.getScrollx() < InterfaceLevel.MAXWIDTH/4) {
@@ -121,9 +117,7 @@ public class Tank extends AbstractAnimatedSprite {
 
         getLevel().add(reinkarnation) ;
         getLevel().remove(this) ;
-    }
-*/
-
+    }*/
 
     public String toString() {
         return "Tank" ;

@@ -27,33 +27,29 @@ public class TankArm extends AbstractAnimatedSprite {
             setAnimation(SpriteDirection.ARM, 1) ;
     }
 
-    public int action(){// throws DestroyedException {
+    public int action() throws DestroyedException {
+ //       System.out.println("Tank Arm X: "+ getX());
+ //       System.out.println("Tank Arm Y: "+ getY());
         if (explodeCount > 0 && getDirection() == CRASH) {
-            try {
                 explode();
-            } catch (DestroyedException e) {
-                e.printStackTrace();
-            }
-
             loadAnimation();
             return -1 ;
         }
 
         switch (sd) {
             case Tank.DIR_RIGHT:
-                setY(getLevel().getStartY()+10+ (int)(((Math.sin(0.15-(getX() - ox)/(25f*SPRITE_SCALE))) *18f*SPRITE_SCALE))) ;
-                setX(getX()+15);
+                setY(getLevel().getStartY()- 10 + (int)(((Math.sin(0.15-(getX() - ox)/(25f*SPRITE_SCALE))) *18f*SPRITE_SCALE))) ;
+                setX(getX()+20);
                 break ;
             case Tank.DIR_LEFT:
-                setX(getX()-15) ;
-                setY(getLevel().getStartY()+10+ (int)(((Math.sin(0.15-(ox-getX())/(25f*SPRITE_SCALE))) *18f*SPRITE_SCALE))) ;
+                setX(getX()-20) ;
+                setY(getLevel().getStartY()- 10 +(int)(((Math.sin(0.15-(ox-getX())/(25f*SPRITE_SCALE))) *18f*SPRITE_SCALE))) ;
                 break ;
         }
         if (hasCollision()) {
-            try {
                 explode() ;
-            } catch (DestroyedException e) {
-                e.printStackTrace();
+            if (this.isNear(getLevel().getHelicopter().getX(), getLevel().getHelicopter().getY())) {
+                getLevel().getHelicopter().explode();
             }
             loadAnimation();
         }
@@ -64,6 +60,7 @@ public class TankArm extends AbstractAnimatedSprite {
         return (getX() > ox + C64Theme.SCREEN_WIDTH)
                 || (getX() < ox - C64Theme.SCREEN_WIDTH)
                 || (getY() < 0)
-                || (getY() >= ground) ;
+                || (getY() >= ground)
+                || (this.isNear(getLevel().getHelicopter().getX(), getLevel().getHelicopter().getY()));
     }
 }

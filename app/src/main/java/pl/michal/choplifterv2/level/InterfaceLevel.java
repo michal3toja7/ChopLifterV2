@@ -43,7 +43,7 @@ public interface InterfaceLevel {
 
     /* Explosion management */
     /** Explosions Fire fire fire */
-    void manageCollision(int x, int y) throws DestroyedException ;
+    void manageCollision(int x, int y, InterfaceAnimatedSprite spriteWhoDitExplosion) throws DestroyedException ;
 
     /* Coordinates */
     /** Level start */
