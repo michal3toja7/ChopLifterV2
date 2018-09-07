@@ -22,6 +22,8 @@ public class Battlefield implements GameObject {
     int i=0;
 
 
+
+
     public Battlefield(){
 
 
@@ -48,6 +50,7 @@ public class Battlefield implements GameObject {
             level.heartBeat();
         }
 
+     //   canvas.drawText("My Text", 700, 300, paint);
 
 
         if (stars==null)

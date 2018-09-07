@@ -7,13 +7,24 @@
     <pl.michal.choplifterv2.ChopLifterPanel
         android:id="@+id/game"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
-
+        android:layout_height="match_parent"
+        />
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:textColor="#fff"
+        android:textSize="16dp"
+        android:id="@+id/arcadeclassic"
+        />
     <com.erz.joysticklibrary.JoyStick
         android:id="@+id/joy1"
         android:layout_width="200dp"
         android:layout_height="200dp"
-        android:layout_gravity="bottom|right"/>
+        android:layout_gravity="bottom|right"
+        />
+
+
 
     <com.erz.joysticklibrary.JoyStick
         android:id="@+id/joy2"

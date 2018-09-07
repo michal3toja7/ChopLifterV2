@@ -47,6 +47,7 @@ public class ChopLifterPanel extends SurfaceView implements SurfaceHolder.Callba
      //   battlefield = new Battlefield();
 
 
+
         thread = new MainThread(getHolder(), this);
 
         setFocusable(true);

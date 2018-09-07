@@ -2,8 +2,10 @@ package pl.michal.choplifterv2;
 
 
 import android.content.Context;
+import android.content.res.AssetManager;
 import android.graphics.Color;
 import android.graphics.Point;
+import android.graphics.Typeface;
 import android.os.Build;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -11,9 +13,13 @@ import android.view.Display;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.TextView;
 
 import com.erz.joysticklibrary.JoyStick;
 
+import java.util.Locale;
+
+import pl.michal.choplifterv2.c64.ArcadeFont;
 import pl.michal.choplifterv2.gui.Controller;
 import pl.michal.choplifterv2.level.DestroyedException;
 
@@ -21,11 +27,13 @@ public class ChopLifterActivity extends AppCompatActivity implements JoyStick.Jo
     private static Context mContext;
     private ChopLifterPanel chopLifterPanel;
     private Controller controller;
+    private TextView mAppNameTextView;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
 
         //Tryb pałnoekranowy
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN);
@@ -57,6 +65,11 @@ public class ChopLifterActivity extends AppCompatActivity implements JoyStick.Jo
                         | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
                         | View.SYSTEM_UI_FLAG_FULLSCREEN
                         | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY);
+
+
+        mAppNameTextView = (TextView) findViewById(R.id.);
+        Typeface ostrichFont = Typeface.createFromAsset(getAssets(), "fonts/arcadeclassic.ttf");
+        mAppNameTextView.setTypeface(ostrichFont);
 
         mContext = getApplicationContext();
 
@@ -136,4 +149,5 @@ public class ChopLifterActivity extends AppCompatActivity implements JoyStick.Jo
     public void onDoubleTap() {
 
     }
+
 }
