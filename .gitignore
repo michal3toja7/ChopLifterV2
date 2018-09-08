@@ -1,0 +1,13 @@
+/app/build/*
+joysticklibrary/build/*
+/.gradle/4.4/*
+/.gradle/buildOutputCleanup/outputFiles.bin
+/.gradle/buildOutputCleanup/buildOutputCleanup.lock
+/.gradle/buildOutputCleanup/cache.properties
+/.idea/caches/build_file_checksums.ser
+/.gradle/buildOutputCleanup/cache.properties
+/build/intermediates/*
+/local.properties
+/local.properties
+/local.properties
+/.idea/*

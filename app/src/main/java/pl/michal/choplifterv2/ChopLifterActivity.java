@@ -53,8 +53,8 @@ public class ChopLifterActivity extends AppCompatActivity implements JoyStick.Jo
         JoyStick joy2 = (JoyStick) findViewById(R.id.joy2);
         joy2.setListener(this);
         joy2.enableStayPut(true);
-        joy2.setPadBackground(R.drawable.pad);
-        joy2.setButtonDrawable(R.drawable.button);
+        //joy2.setPadBackground(R.drawable.pad);
+        //joy2.setButtonDrawable(R.drawable.button);
 
 
         //usuwanie przycisków nawigacyjnych
@@ -67,9 +67,9 @@ public class ChopLifterActivity extends AppCompatActivity implements JoyStick.Jo
                         | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY);
 
 
-        mAppNameTextView = (TextView) findViewById(R.id.);
+        //mAppNameTextView = (TextView) findViewById(R.id.);
         Typeface ostrichFont = Typeface.createFromAsset(getAssets(), "fonts/arcadeclassic.ttf");
-        mAppNameTextView.setTypeface(ostrichFont);
+        //mAppNameTextView.setTypeface(ostrichFont);
 
         mContext = getApplicationContext();
 
