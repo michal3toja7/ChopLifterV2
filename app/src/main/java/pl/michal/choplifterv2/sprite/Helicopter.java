@@ -23,7 +23,7 @@ public class Helicopter extends AbstractAnimatedSprite {
 
     private final static int IMPULSE = 60;
     private final static int FULL_THROTTLE = 10;
-    private final static float GRAVITY = 0.4f;
+    private final static float GRAVITY = 0.2f;
     private final static int ANGLEPOINT = 5;
     private final static int MAXANGLEPOINT = ANGLEPOINT + 3;
 

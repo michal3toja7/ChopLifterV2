@@ -2,10 +2,8 @@ package pl.michal.choplifterv2;
 
 
 import android.content.Context;
-import android.content.res.AssetManager;
 import android.graphics.Color;
 import android.graphics.Point;
-import android.graphics.Typeface;
 import android.os.Build;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -13,26 +11,22 @@ import android.view.Display;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
-import android.widget.TextView;
 
 import com.erz.joysticklibrary.JoyStick;
 
-import java.util.Locale;
-
-import pl.michal.choplifterv2.c64.ArcadeFont;
-import pl.michal.choplifterv2.gui.Controller;
+import pl.michal.choplifterv2.c64.C64Color;
+import pl.michal.choplifterv2.c64.C64Theme;
 import pl.michal.choplifterv2.level.DestroyedException;
 
 public class ChopLifterActivity extends AppCompatActivity implements JoyStick.JoyStickListener{
     private static Context mContext;
     private ChopLifterPanel chopLifterPanel;
-    private Controller controller;
-    private TextView mAppNameTextView;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        mContext = getApplicationContext();
 
 
         //Tryb pałnoekranowy
@@ -50,11 +44,17 @@ public class ChopLifterActivity extends AppCompatActivity implements JoyStick.Jo
         joy1.setPadColor(Color.parseColor("#55ffffff"));
         joy1.setButtonColor(Color.parseColor("#55ff0000"));
 
-        JoyStick joy2 = (JoyStick) findViewById(R.id.joy2);
-        joy2.setListener(this);
-        joy2.enableStayPut(true);
-        joy2.setPadBackground(R.drawable.pad);
-        joy2.setButtonDrawable(R.drawable.button);
+        JoyStick buttonA = (JoyStick) findViewById(R.id.buttonA);
+        buttonA.setListener(this);
+  //      buttonA.enableStayPut(true);
+        buttonA.setPadColor(Color.parseColor("#99ff0000"));
+        buttonA.setButtonDrawable(R.drawable.buttona);
+
+        JoyStick buttonB = (JoyStick) findViewById(R.id.buttonB);
+        buttonB.setListener(this);
+        //      buttonA.enableStayPut(true);
+        buttonB.setPadColor(Color.parseColor("#993399ff"));
+        buttonB.setButtonDrawable(R.drawable.buttonb);
 
 
         //usuwanie przycisków nawigacyjnych
@@ -67,11 +67,6 @@ public class ChopLifterActivity extends AppCompatActivity implements JoyStick.Jo
                         | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY);
 
 
-        mAppNameTextView = (TextView) findViewById(R.id.);
-        Typeface ostrichFont = Typeface.createFromAsset(getAssets(), "fonts/arcadeclassic.ttf");
-        mAppNameTextView.setTypeface(ostrichFont);
-
-        mContext = getApplicationContext();
 
 
     }
@@ -128,7 +123,7 @@ public class ChopLifterActivity extends AppCompatActivity implements JoyStick.Jo
                     e.printStackTrace();
                 }
                 break;
-            case R.id.joy2:
+            case R.id.buttonA:
            //     gameView.rotate(angle);
                 break;
         }
@@ -137,10 +132,11 @@ public class ChopLifterActivity extends AppCompatActivity implements JoyStick.Jo
     @Override
     public void onTap(JoyStick joyStick) {
         switch (joyStick.getId()) {
-            case R.id.joy1:
+            case R.id.buttonA:
+                chopLifterPanel.battlefield.onTap('a');
                 break;
-            case R.id.joy2:
-                chopLifterPanel.battlefield.onTap();
+            case R.id.buttonB:
+                chopLifterPanel.battlefield.onTap('b');
                 break;
         }
     }

@@ -31,20 +31,7 @@ public final class C64Theme {
 	public final static int LIGHT_PURPLE = C64Color.C64COLOR_14 ;
 	public final static int DARK_WHITE = C64Color.C64COLOR_15 ;
 
-	/* Font */
-	public final static int C64FONT = C64Font.PETSCII_UNSHIFTED ;
-	
-	// ------------------------------------------------------------------------
-	
-	/**
-	 * getText wrapper to font
-	 * @param text
-	 * @return
-	 */
 
-	public final static int[][] getText(String text) {
-		return C64Font.getText(text, C64FONT) ;
-	}
 }
 
 
