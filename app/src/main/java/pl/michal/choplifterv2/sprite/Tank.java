@@ -5,6 +5,7 @@ import pl.michal.choplifterv2.level.InterfaceLevel;
 
 import static pl.michal.choplifterv2.c64.C64Theme.FENCE_LINE;
 import static pl.michal.choplifterv2.c64.C64Theme.SCREEN_WIDTH;
+import static pl.michal.choplifterv2.c64.C64Theme.SPRITE_SCALE;
 import static pl.michal.choplifterv2.level.InterfaceLevel.MAXWIDTH;
 
 public class Tank extends AbstractAnimatedSprite {
@@ -26,7 +27,7 @@ public class Tank extends AbstractAnimatedSprite {
 
     public Tank(InterfaceLevel pLevel, int x) {
         setX(x) ;
-        setY(pLevel.getStartY() + 19) ;
+        setY(pLevel.getStartY() + 19* SPRITE_SCALE) ;
         setDirection(DIR_RIGHT) ;
         setLevel(pLevel) ;
         loadAnimation() ;
@@ -106,18 +107,11 @@ public class Tank extends AbstractAnimatedSprite {
         getLevel().add(new TankArm(getX(), getY(), getDirection(), getLevel())) ;
     }
 
-/*    public void remove() {
-        Tank reinkarnation = new Tank(getLevel(), 0) ;
-
-        if (BattleField.getScrollx() < InterfaceLevel.MAXWIDTH/4) {
-            reinkarnation.setX(BattleField.getScrollx() + 350) ;
-        } else {
-            reinkarnation.setX(BattleField.getScrollx() - 200) ;
-        }
-
+    public void remove() {
+        Tank reinkarnation = new Tank(getLevel()) ;
         getLevel().add(reinkarnation) ;
         getLevel().remove(this) ;
-    }*/
+    }
 
     public String toString() {
         return "Tank" ;

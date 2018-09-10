@@ -1,8 +1,11 @@
 package pl.michal.choplifterv2.sprite;
 
 import pl.michal.choplifterv2.c64.C64Theme;
+import pl.michal.choplifterv2.gui.Sounds;
 import pl.michal.choplifterv2.level.DestroyedException;
 import pl.michal.choplifterv2.level.InterfaceLevel;
+
+import static pl.michal.choplifterv2.c64.C64Theme.SPRITE_SCALE;
 
 public class Arm extends AbstractAnimatedSprite {
     private int sx = 0 ;
@@ -18,7 +21,7 @@ public class Arm extends AbstractAnimatedSprite {
         setLevel(pLevel) ;
         setX(x + 8) ;
         setY(18 + ((int)(y/15))*15) ;
-        this.ground = pLevel.getLandingCoordsY() + 12 ;
+        this.ground = pLevel.getLandingCoordsY() + 14 * SPRITE_SCALE ;
         setAnimation(SpriteDirection.ARM, 0) ;
     }
 
@@ -52,8 +55,10 @@ public class Arm extends AbstractAnimatedSprite {
                 break ;
         }
 
+
         if (hasCollision()) {
                 explode() ;
+            Sounds.playExplosion();
         }
         return -1 ;
     }

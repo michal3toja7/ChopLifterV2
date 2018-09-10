@@ -69,13 +69,17 @@ public class StatusBar implements GameObject {
         getLabel("heart").draw(canvas);
         canvas.drawText((""+level.getSaved()),(3*(SCREEN_WIDTH/4)),barTextTop + textAndLabelHeight,textPaint);
         pauseScreenPaint.setColor(Color.parseColor("#99000000"));
+        textPaint.setTextSize(pauseScreenTextSize);
+        if (level.isYouWin()) {
+            canvas.drawRect(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT, pauseScreenPaint);
+            canvas.drawText("Wygrales,   uratowales   wszystkich   ! ", SCREEN_WIDTH / 4, SCREEN_HEIGHT / 2, textPaint);
+        }
         if (!level.isStarted() && level.isYouLose()) {
             canvas.drawRect(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT, pauseScreenPaint);
             canvas.drawText("game   over", SCREEN_WIDTH / 3, SCREEN_HEIGHT / 2, textPaint);
         }
-        else if (!level.isStarted()) {
+        else if (!level.isStarted() && Battlefield.isNewGame()) {
             canvas.drawRect(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT, pauseScreenPaint);
-            textPaint.setTextSize(pauseScreenTextSize);
             canvas.drawText("Witaj   w   ChopLifterV2!", SCREEN_WIDTH / 4, SCREEN_HEIGHT / 4, textPaint);
             canvas.drawText("Projekt   autorstwa:", SCREEN_WIDTH / 2, SCREEN_HEIGHT / 4 + pauseScreenTextSize, textPaint);
             canvas.drawText("Michal   Bruzdowski", SCREEN_WIDTH / 2, SCREEN_HEIGHT / 4 + 2 * pauseScreenTextSize, textPaint);

@@ -8,6 +8,7 @@ import pl.michal.choplifterv2.sprite.Tank;
 
 import static pl.michal.choplifterv2.c64.C64Theme.SCREEN_HEIGHT;
 import static pl.michal.choplifterv2.c64.C64Theme.SCREEN_WIDTH;
+import static pl.michal.choplifterv2.c64.C64Theme.SPRITE_SCALE;
 
 public class Level1 extends AbstractLevel {
     public Level1() {
@@ -18,15 +19,18 @@ public class Level1 extends AbstractLevel {
  //       add(new Mountain(200, 172)) ;
  //       add(new Mountain(0, 172)) ;
 
-        add(new House(4000, 2*(SCREEN_HEIGHT/3), this)) ;
-       add(new House(3000, 2*(SCREEN_HEIGHT/3), this)) ;
-        House openHouse = new House(1600, 2*(SCREEN_HEIGHT/3), this) ;
+        add(new House(4000,  getStartY() + (9*SPRITE_SCALE), this)) ;
+       add(new House(3000, getStartY() + (9*SPRITE_SCALE), this)) ;
+        House openHouse = new House(1600, getStartY() + (9*SPRITE_SCALE), this) ;
         add(openHouse) ;
         openHouse.remove() ; /// Open (not remove) house1
 
        for (int i=0; i < 2; ++i)
             add(new Tank(this)) ;
+
+       setMaxSaved(30);
     }
+
 
     // ------------------------------------------------------------------------
 
@@ -41,7 +45,7 @@ public class Level1 extends AbstractLevel {
      * @implements {@link InterfaceLevel#getStartX()}
      */
     public final int getStartY() {
-        return 2*(SCREEN_HEIGHT/3) ;
+        return 2*(SCREEN_HEIGHT/3) - (19 * SPRITE_SCALE) ;
     }
 }
 

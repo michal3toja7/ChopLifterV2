@@ -14,7 +14,7 @@ import static pl.michal.choplifterv2.c64.C64Theme.SCREEN_WIDTH;
 public interface InterfaceLevel {
     /*Constants */
     /** Max widths of a level */
-    public final static int MAXWIDTH = SCREEN_WIDTH*4 ;
+    public final static int MAXWIDTH = SCREEN_WIDTH*5 ;
 
 
     /* Maps */
@@ -44,6 +44,7 @@ public interface InterfaceLevel {
     /* Explosion management */
     /** Explosions Fire fire fire */
     void manageCollision(int x, int y, InterfaceAnimatedSprite spriteWhoDitExplosion) throws DestroyedException ;
+    void houseBurning(int x, int y, InterfaceAnimatedSprite spriteWhoDitExplosion) throws DestroyedException;
 
     /* Coordinates */
     /** Level start */
@@ -54,6 +55,8 @@ public interface InterfaceLevel {
     int getLandingCoordsX() ;
     /** Level landing */
     int getLandingCoordsY() ;
+    void setMaxSaved(int maxSaved);
+    int getMaxSaved();
 
     /* Status fields */
     /** Game status */
@@ -77,6 +80,7 @@ public interface InterfaceLevel {
 
     void setYouLose(boolean youLose);
     boolean isYouLose();
+    boolean isYouWin();
 
     /* Main actresses */
     /** Helicopter */

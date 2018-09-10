@@ -4,6 +4,7 @@ import pl.michal.choplifterv2.level.DestroyedException;
 import pl.michal.choplifterv2.level.InterfaceLevel;
 
 import static pl.michal.choplifterv2.c64.C64Theme.FENCE_LINE;
+import static pl.michal.choplifterv2.c64.C64Theme.SPRITE_SCALE;
 import static pl.michal.choplifterv2.level.InterfaceLevel.MAXWIDTH;
 
 public class Human extends AbstractAnimatedSprite{
@@ -24,7 +25,7 @@ public class Human extends AbstractAnimatedSprite{
 
     public Human(InterfaceLevel pLevel) {
         setX((int) Math.round(Math.random() * (InterfaceLevel.MAXWIDTH-400)) + 100) ;
-        setY(pLevel.getStartY() + 8) ;
+        setY(pLevel.getStartY() + 11 * SPRITE_SCALE) ;
         setDirection(DIR_RIGHT) ;
         setLevel(pLevel) ;
         loadAnimation() ;

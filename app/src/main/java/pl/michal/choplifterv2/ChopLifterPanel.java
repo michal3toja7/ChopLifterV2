@@ -111,6 +111,7 @@ public class ChopLifterPanel extends SurfaceView implements SurfaceHolder.Callba
     static public void startNewGame(){
         battlefield = null;
         battlefield = new Battlefield();
+        battlefield.setNewGame(true);
         level = null ;
         level = new Level1() ;
         battlefield.setLevel(level) ;

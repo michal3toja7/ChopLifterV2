@@ -16,7 +16,7 @@ public class TankArm extends AbstractAnimatedSprite {
         this.ox = x ;
         this.sd = d ;
         setLevel(pLevel) ;
-        this.ground = pLevel.getLandingCoordsY() + 8;
+        this.ground = pLevel.getLandingCoordsY() + 10* SPRITE_SCALE;
         setX(x + 8) ;
         setY(10 + y) ;
         setAnimation(SpriteDirection.ARM, 0) ;

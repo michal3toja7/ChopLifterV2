@@ -29,7 +29,9 @@ public class Battlefield implements GameObject {
     private InterfaceLevel level= new Level1();
     private static int scrollx = 0 ;
     private int i=0;
-    StatusBar statusBar;
+    private StatusBar statusBar;
+    private  boolean musicIsPlaying = false;
+    static private boolean isNewGame;
 
 
 
@@ -96,10 +98,20 @@ public class Battlefield implements GameObject {
 
     @Override
     public void update() {
+        if(level.isYouWin()){
+            level.setStarted(false);
+        }
+
         if (level!=null) {
             if (!level.getHelicopter().isAlive()) {
                 level.setStarted(false);
                 level.setYouLose(true);
+                Sounds.stopHeliopterMusic();
+                musicIsPlaying = false;
+            }
+            else if (!musicIsPlaying && level.getHelicopter().isAlive() && level.isStarted()){
+                Sounds.playHelicopter();
+                musicIsPlaying = true;
             }
         }
     }
@@ -129,14 +141,24 @@ public class Battlefield implements GameObject {
                 if(!level.isStarted() && level.isYouLose()){
                     ChopLifterPanel.startNewGame();
                 }
-                else if(!level.isStarted())
+                else if(!level.isStarted()) {
                     level.setStarted(true);
-
-
+                    setNewGame(false);
+                }
 
                 break;
         }
     }
 
+    public void setNewGame(boolean newGame) {
+        isNewGame = newGame;
+    }
 
+   static public boolean isNewGame() {
+        return isNewGame;
+    }
+
+    public StatusBar getStatusBar() {
+        return statusBar;
+    }
 }

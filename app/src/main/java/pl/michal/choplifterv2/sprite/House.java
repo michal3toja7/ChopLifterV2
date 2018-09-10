@@ -1,5 +1,6 @@
 package pl.michal.choplifterv2.sprite;
 
+import pl.michal.choplifterv2.level.DestroyedException;
 import pl.michal.choplifterv2.level.InterfaceLevel;
 
 public class House extends AbstractAnimatedSprite {
@@ -26,8 +27,11 @@ public class House extends AbstractAnimatedSprite {
         }
     }
 
-    public int action() {
-        if (getDirection() == CLOSED) return -1 ;
+    public int action() throws DestroyedException {
+        if (getDirection()!=CRASH)
+        getLevel().houseBurning(getX(),getY(),this);
+        if (getDirection() == CLOSED)
+        return -1 ;
 
         return -1 ;
     }
