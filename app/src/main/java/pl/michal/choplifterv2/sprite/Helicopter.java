@@ -141,6 +141,7 @@ public class Helicopter extends AbstractAnimatedSprite {
         move(angle, power);
         if (explodeCount > 0 && getDirection() == CRASH) {
                 explode();
+                isAlive();
             loadAnimation();
         }
 

@@ -42,6 +42,7 @@ public abstract class AbstractLevel implements InterfaceLevel{
     private int saved = 0 ;
     /** Level started? */
     private boolean started = false ;
+    private boolean youLose= false;
 
     // ------------------------------------------------------------------------
 
@@ -309,6 +310,13 @@ public abstract class AbstractLevel implements InterfaceLevel{
             }
         }
 
+    }
+    public void setYouLose(boolean youLose) {
+        this.youLose = youLose;
+    }
+
+    public boolean isYouLose() {
+        return youLose;
     }
 
 

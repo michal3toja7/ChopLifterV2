@@ -7,6 +7,7 @@ import android.os.Build;
 import android.support.annotation.RequiresApi;
 import android.support.graphics.drawable.VectorDrawableCompat;
 
+import pl.michal.choplifterv2.ChopLifterPanel;
 import pl.michal.choplifterv2.R;
 import pl.michal.choplifterv2.c64.C64Theme;
 import pl.michal.choplifterv2.level.DestroyedException;
@@ -28,11 +29,9 @@ public class Battlefield implements GameObject {
     private InterfaceLevel level= new Level1();
     private static int scrollx = 0 ;
     private int i=0;
-    private Typeface arcadeClassic = Typeface.createFromAsset(getContext().getAssets(), "fonts/arcadeclassic.ttf");
-    private int sideMargin = SCREEN_WIDTH / 104;
-    private int topMargin = SCREEN_HEIGHT / 68;
-    private int statusBarHeight = 15* SPRITE_SCALE;
-    private int textAndLabelHeight = 13* SPRITE_SCALE - 2*topMargin;
+    StatusBar statusBar;
+
+
 
 
 
@@ -53,35 +52,35 @@ public class Battlefield implements GameObject {
     public void draw(Canvas canvas){
         Paint paint = new Paint();
         canvas.drawColor(C64Theme.BLACK);
+
+        if (stars==null)
+            stars = new Stars(20);
+        stars.draw(canvas);
+
         int width = SCREEN_WIDTH;
-        int height= C64Theme.SCREEN_HEIGHT;
+        int height= SCREEN_HEIGHT;
 
         paint.setColor(C64Theme.GRAY);
-        paint.setTextSize(50);
-        paint.setTypeface(arcadeClassic);
         canvas.drawRect(0,2*(height/3),width,height,paint);
 
         if (level != null) {
-           // level.getHelicopter().refreshAnimation();
-            level.refreshAnimation();
-            level.draw(canvas) ;
-            level.heartBeat();
+            level.draw(canvas);
+            if(level.isStarted()) {
+                level.refreshAnimation();
+
+                level.heartBeat();
+            }
         }
 
+        //if (level.isStarted()){
+            if (statusBar == null)
+                statusBar = new StatusBar(level);
+            statusBar.draw(canvas);
 
-        Paint paintStroke= new Paint();
-        paintStroke.setColor(C64Theme.YELLOW) ;
-        paintStroke.setStyle(Paint.Style.STROKE);
-        paintStroke.setStrokeWidth(topMargin/2);
-        canvas.drawRoundRect( sideMargin, topMargin, SCREEN_WIDTH - sideMargin, topMargin + statusBarHeight, 3*sideMargin,3*sideMargin, paintStroke);
-        paint.setColor(C64Theme.RED);
-        canvas.drawRoundRect(sideMargin + sideMargin,topMargin+topMargin,(SCREEN_WIDTH/4) - 3*sideMargin, statusBarHeight, 12, 12,paint);
-        canvas.drawRoundRect((SCREEN_WIDTH/4) + 3*sideMargin,topMargin+topMargin,(SCREEN_WIDTH/2) - 3*sideMargin, statusBarHeight, 12, 12,paint);
-        canvas.drawRoundRect((SCREEN_WIDTH/2) + 3*sideMargin,topMargin+topMargin,(3*(SCREEN_WIDTH/4)) - 3*sideMargin, statusBarHeight, 12, 12,paint);
-        canvas.drawRoundRect((3*(SCREEN_WIDTH/4)) + 3*sideMargin,topMargin+topMargin,SCREEN_WIDTH - sideMargin - sideMargin, statusBarHeight, 12, 12,paint);
-        getLabel("pik").draw(canvas);
-        getLabel("karo").draw(canvas);
-        getLabel("heart").draw(canvas);
+        //}
+
+
+
 
 
 
@@ -92,13 +91,17 @@ public class Battlefield implements GameObject {
        // canvas.drawText("Testowy komunikat", 700, 300, paint);
 
 
-        if (stars==null)
-            stars = new Stars(20);
-        stars.draw(canvas);
+
     }
 
     @Override
     public void update() {
+        if (level!=null) {
+            if (!level.getHelicopter().isAlive()) {
+                level.setStarted(false);
+                level.setYouLose(true);
+            }
+        }
     }
 
 
@@ -113,38 +116,27 @@ public class Battlefield implements GameObject {
         switch (button) {
             case 'a':
                 level.getHelicopter().shoot();
+                if(!level.isStarted())
+                    level.setStarted(true);
                 break;
             case 'b':
                 level.getHelicopter().toggleDirection();
+                if(!level.isStarted())
+                    level.setStarted(true);
+                break;
+            case 'x':
+
+                if(!level.isStarted() && level.isYouLose()){
+                    ChopLifterPanel.startNewGame();
+                }
+                else if(!level.isStarted())
+                    level.setStarted(true);
+
+
+
                 break;
         }
     }
 
-     private int getVectorWidth(VectorDrawableCompat mMyVectorDrawable){
-
-         double scale =  mMyVectorDrawable.getMinimumHeight()/ (textAndLabelHeight) ;
-
-         return (int)(mMyVectorDrawable.getMinimumWidth() / scale);
-     }
-      private VectorDrawableCompat getLabel(String label){
-        int barTextTop = 2 * topMargin + SPRITE_SCALE;
-
-           VectorDrawableCompat mMyVectorDrawable = null;
-        switch (label) {
-            case ("pik"):
-                mMyVectorDrawable = VectorDrawableCompat.create(getContext().getResources(), R.drawable.pik, null);
-                mMyVectorDrawable.setBounds((SCREEN_WIDTH / 4) - 3 * sideMargin, barTextTop, (SCREEN_WIDTH / 4) - 3 * sideMargin + getVectorWidth(mMyVectorDrawable), barTextTop+ textAndLabelHeight);
-                break;
-            case ("karo"):
-                mMyVectorDrawable = VectorDrawableCompat.create(getContext().getResources(), R.drawable.karo, null);
-                mMyVectorDrawable.setBounds((SCREEN_WIDTH / 2) - 3 * sideMargin, barTextTop, (SCREEN_WIDTH / 2) - 3 * sideMargin + getVectorWidth(mMyVectorDrawable),  barTextTop+ textAndLabelHeight);
-                break;
-            case ("heart"):
-                mMyVectorDrawable = VectorDrawableCompat.create(getContext().getResources(), R.drawable.heart, null);
-                mMyVectorDrawable.setBounds((3 * (SCREEN_WIDTH / 4)) - (3 * sideMargin), barTextTop, ((3 * (SCREEN_WIDTH / 4)) - 3 * sideMargin) + getVectorWidth(mMyVectorDrawable),  barTextTop+ textAndLabelHeight);
-                break;
-        }
-        return mMyVectorDrawable;
-        }
 
 }

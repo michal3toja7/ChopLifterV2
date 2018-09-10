@@ -75,6 +75,9 @@ public interface InterfaceLevel {
     /** Game status */
     void setStarted(boolean started) ;
 
+    void setYouLose(boolean youLose);
+    boolean isYouLose();
+
     /* Main actresses */
     /** Helicopter */
     Helicopter getHelicopter() ;

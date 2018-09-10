@@ -56,6 +56,15 @@ public class ChopLifterActivity extends AppCompatActivity implements JoyStick.Jo
         buttonB.setPadColor(Color.parseColor("#993399ff"));
         buttonB.setButtonDrawable(R.drawable.buttonb);
 
+        /*  Na razie brak pomysłu - trochę nie pasuje do interfejsu.
+        JoyStick pauseButton = (JoyStick) findViewById(R.id.pauseButton);
+        pauseButton.setListener(this);
+        //      buttonA.enableStayPut(true);
+        pauseButton.setPadBackground(R.drawable.pausebutton);
+        pauseButton.setButtonColor(Color.parseColor("#00ffffff"));
+        */
+
+
 
         //usuwanie przycisków nawigacyjnych
            this.getWindow().getDecorView().setSystemUiVisibility(
@@ -119,6 +128,7 @@ public class ChopLifterActivity extends AppCompatActivity implements JoyStick.Jo
             case R.id.joy1:
                 try {
                     chopLifterPanel.battlefield.move(angle, power);
+                    chopLifterPanel.battlefield.onTap('x');
                 } catch (DestroyedException e) {
                     e.printStackTrace();
                 }
@@ -132,13 +142,18 @@ public class ChopLifterActivity extends AppCompatActivity implements JoyStick.Jo
     @Override
     public void onTap(JoyStick joyStick) {
         switch (joyStick.getId()) {
+            case R.id.joy1:
+                chopLifterPanel.battlefield.onTap('x');
+                break;
             case R.id.buttonA:
                 chopLifterPanel.battlefield.onTap('a');
                 break;
             case R.id.buttonB:
                 chopLifterPanel.battlefield.onTap('b');
                 break;
+
         }
+
     }
 
     @Override

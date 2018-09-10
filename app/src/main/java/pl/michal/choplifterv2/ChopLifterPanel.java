@@ -3,6 +3,8 @@ package pl.michal.choplifterv2;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Paint;
+import android.os.Build;
+import android.support.annotation.RequiresApi;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.SurfaceHolder;
@@ -21,8 +23,8 @@ import pl.michal.choplifterv2.level.Level1;
 public class ChopLifterPanel extends SurfaceView implements SurfaceHolder.Callback {
     private MainThread thread;
     private Paint paint;
-    public Battlefield battlefield;
-    private InterfaceLevel level ;
+    static public Battlefield battlefield;
+    static private InterfaceLevel level ;
 
 
     public ChopLifterPanel(Context context){
@@ -83,21 +85,36 @@ public class ChopLifterPanel extends SurfaceView implements SurfaceHolder.Callba
     @Override
     public boolean onTouchEvent(MotionEvent event)
     {
+        battlefield.onTap('x');
         return super.onTouchEvent(event);
     }
 
     public void update()
     {
+        if(battlefield==null){
+            startNewGame();
+        }
+        battlefield.update();
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
     public void draw(Canvas canvas)
     {
         super.draw(canvas);
-       if(battlefield==null){
-           battlefield = new Battlefield();
+       if(battlefield!=null){
+           battlefield.draw(canvas);
        }
-        battlefield.draw(canvas);
+
+    }
+
+    static public void startNewGame(){
+        battlefield = null;
+        battlefield = new Battlefield();
+        level = null ;
+        level = new Level1() ;
+        battlefield.setLevel(level) ;
+
     }
 
 }

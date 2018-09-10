@@ -27,5 +27,12 @@
         android:layout_height="100dp"
         android:layout_gravity="bottom"
         android:layout_margin="70dp"/>
+    <!---  Na razie brak pomysłu - trochę nie pasuję do interfejsu
+    <com.erz.joysticklibrary.JoyStick
+        android:id="@+id/pauseButton"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_gravity="top"/>
+        -->
 </FrameLayout>
 
