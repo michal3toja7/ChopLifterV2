@@ -13,15 +13,15 @@ import static pl.michal.choplifterv2.c64.C64Theme.SPRITE_SCALE;
 public class Level1 extends AbstractLevel {
     public Level1() {
 
- //       add(new Mountain(845, 172)) ;
- //       add(new Mountain(590, 172)) ;
- //       add(new Mountain(400, 172)) ;
- //       add(new Mountain(200, 172)) ;
- //       add(new Mountain(0, 172)) ;
 
-        add(new House(4000,  getStartY() + (9*SPRITE_SCALE), this)) ;
-       add(new House(3000, getStartY() + (9*SPRITE_SCALE), this)) ;
-        House openHouse = new House(1600, getStartY() + (9*SPRITE_SCALE), this) ;
+
+        for (int i = SCREEN_WIDTH; i<= this.MAXWIDTH; i=i+800 )
+            add(new Mountain(i, getStartY() + (11 * SPRITE_SCALE)));
+        
+
+        add(new House(5000,  getStartY() + (9*SPRITE_SCALE), this)) ;
+       add(new House(4000, getStartY() + (9*SPRITE_SCALE), this)) ;
+        House openHouse = new House(3000, getStartY() + (9*SPRITE_SCALE), this) ;
         add(openHouse) ;
         openHouse.remove() ; /// Open (not remove) house1
 

@@ -43,7 +43,8 @@ public abstract class AbstractAnimatedSprite extends AbstractSprite implements I
         STATION("station", new String[]{""}, 1),
         HOUSE("house", new String[]{"", "_crash"}, 1),
         ARM("arm", new String[]{"", "_crash"}, 2),
-        FENCE("fence", new String[]{""}, 1);
+        FENCE("fence", new String[]{""}, 1),
+        MOUNTAIN("mountain", new String[]{""}, 0);
 
 
 
